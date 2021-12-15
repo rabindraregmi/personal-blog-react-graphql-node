@@ -1,10 +1,85 @@
+scalar Date
+
 type User {
   id: ID!
-  username: String!
+  email: String!
   password: String!
+}
+
+type Profile {
+  id: ID!
+  full_name: String!
+  email: String
+  mobile_number: String
+  phone_number: String
+  address: String
+  intro: String
+}
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Blog {
+  id: ID!
+  title: String!
+  subtitle: String
+  content: String
+  published: Boolean
+  category: Category!
+  created_at: Date!
+  updated_at: Date!
+}
+
+input CategoryInput {
+  id: ID
+  name: String
+  description: String
+}
+
+input ProfileInput {
+  id: ID
+  full_name: String
+  email: String
+  mobile_number: String
+  phone_number: String
+  address: String
+  intro: String
+}
+
+input BlogInput {
+  id: ID
+  title: String
+  subtitle: String
+  content: String
+  published: Boolean
+  category: ID
 }
 
 type Query {
   User(id: ID!): User
   Users: [User]
+
+  Profile(id: ID!): Profile
+
+  getOneBlogPost(id: ID!): Blog
+  getAllBlogPost: [Blog]
+  getPublishedBlogPost: [Blog]
+
+  getCategories: [Category]
+}
+
+type Mutation {
+  createCategory(category: CategoryInput!): Category
+  editCategory(category: CategoryInput!): Category
+  deleteCategory(id: ID!): Category
+
+  createProfile(profile: ProfileInput): Profile
+  editProfile(profile: ProfileInput): Profile
+
+  createBlogPost(blog: BlogInput!): Blog
+  editBlogPost(blog: BlogInput!): Blog
+  deleteBlogPost(id: ID!): Blog
 }
