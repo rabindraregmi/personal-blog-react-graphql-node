@@ -1,0 +1,86 @@
+//color palatte
+$blue: #0394c7;
+$orange_dark: #d9480f, 90%;
+$orange: #f76707;
+
+//new color palatte
+$brand-emp-base: #0394c7;
+$brand-emp-light: #81cae3;
+$brand-emp-dark: #024869;
+$brand-co-base: #f76707;
+$brand-co-light: rgba(217, 72, 15, 0.9);
+$brand-co-dark: #d9480f;
+
+$black: #212529;
+$gray8: #343a40;
+$gray7: #495057;
+$gray6: #868e96;
+$gray5: #adb5bd;
+$gray4: #ced4da;
+$gray3: #dee2e6;
+$gray2: #e9ecef;
+$gray1: #f1f3f5;
+$gray0: #f8f9fa;
+$white: #ffffff;
+
+$status-info-base: #4263eb;
+$status-info-light: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ),
+  #4263eb;
+$status-info-lighter: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)
+  ),
+  #4263eb;
+$status-error-base: #f03738;
+$status-error-light: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ),
+  #f03738;
+$status-error-lighter: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)
+  ),
+  #f03738;
+$status-warning-base: #f59f00;
+$status-warning-light: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ),
+  #f59f00;
+$status-warning-lighter: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)
+  ),
+  #f59f00;
+$status-success-base: #3cc13b;
+$status-success-light: linear-gradint(
+    0deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ),
+  #3cc13b;
+$status-success-lighter: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)
+  ),
+  #3cc13b;
+
+$table-emp-row-hover: rgba(3, 148, 199, 0.2);
+$table-co-row-hover: rgba(219, 88, 37, 0.2);
+$table-emp-row-selected: rgba(3, 148, 199, 0.4);
+$table-co-row-selected: rgba(219, 88, 37, 0.4);
+
+:export {
+  tableCoRowHover: $table-co-row-hover;
+}

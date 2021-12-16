@@ -1,0 +1,131 @@
+$userViewColor: #024869;
+$coViewColor: #d9480f;
+
+.navbar {
+  position: absolute;
+  height: 66px;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+
+  &.navbar-expand {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  svg {
+    fill: white;
+    padding: 10px;
+  }
+  .navbar-center {
+    align-content: center;
+    align-items: stretch;
+    color: #fff;
+    vertical-align: middle;
+    font-size: 20px;
+    margin: 13px;
+  }
+
+  .navbar-right {
+    align-content: center;
+    align-items: stretch;
+    height: 66px;
+    padding: 0;
+  }
+
+  .navbar-brand {
+    height: auto;
+    width: auto;
+    cursor: pointer;
+    padding: 15px 24px;
+
+    img {
+      margin: 0;
+      padding: 0;
+      height: 36px;
+      //max-height: 3.5rem;
+    }
+  }
+
+  .action {
+    padding: 0;
+    height: 66px;
+    width: 66px;
+
+    svg {
+      padding: 0;
+      margin: 21px;
+    }
+
+    .avatar .sb-avatar__text {
+      margin: 13px;
+    }
+    img {
+      margin: 13px;
+    }
+
+    &:hover {
+      &[data-view="Employee"] {
+        background-color: #0394c7;
+      }
+      &[data-view="CO"] {
+        background-color: #f76707;
+        // background-color: #FAB005;
+      }
+    }
+  }
+
+  .action-sm {
+    padding: 0;
+    //height: 16px;
+    //width: 16px;
+
+    svg {
+      padding: 0;
+      margin: 21px;
+    }
+
+    .avatar .sb-avatar__text {
+      margin: 13px;
+    }
+    img {
+      margin: 13px;
+    }
+
+    &:hover {
+      &[data-view="Employee"] {
+        background-color: #0394c7;
+      }
+      &[data-view="CO"] {
+        background-color: #f76707;
+        // background-color: #FAB005;
+      }
+    }
+  }
+
+  ul {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+    position: absolute;
+    //width: 264px;
+    //height: 66px;
+    right: 0px;
+    align-items: center;
+  }
+}
+.profile-action {
+  //@extend .h5;
+  //display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+#signout {
+  inherits: pro;
+  cursor: pointer;
+  color: #e03131;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
