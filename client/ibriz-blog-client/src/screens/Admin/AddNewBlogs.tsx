@@ -1,23 +1,33 @@
 import { gql, useMutation } from "@apollo/client";
 import { Save24 } from "@carbon/icons-react";
-import { Formik } from "formik";
-import { useEffect } from "react";
-import * as yup from "yup";
+import { CircularProgress } from "@material-ui/core";
+import { ErrorMessage, Formik } from "formik";
+import { useEffect, useState } from "react";
+import * as Yup from "yup";
 import { useSnackBar } from "../../context/SnackbarContext";
 import { GET_ALL_BLOGS } from "./BlogPostTable";
+import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
+
+const ADD_NEW_BLOG_POST = gql`
+  mutation CreateNewBlogPost($blog: BlogInput!) {
+    createBlogPost(blog: $blog) {
+      title
+      subtitle
+      content
+      published
+    }
+  }
+`;
 
 const AddNewBlogs = () => {
-  const ADD_NEW_BLOG_POST = gql`
-    mutation CreateNewBlogPost($blog: BlogInput!) {
-      createBlogPost(blog: $blog) {
-        title
-        subtitle
-        content
-        published
-      }
-    }
-  `;
-
+  const { setSnackBarState } = useSnackBar();
+  const navigate = useNavigate();
   const [addNewBlogPost, { data, loading, error }] = useMutation(
     ADD_NEW_BLOG_POST,
     {
@@ -25,98 +35,56 @@ const AddNewBlogs = () => {
     }
   );
 
-  const initialValues = {
+  const initialFormValues = {
     title: "",
     subtitle: "",
     content: "",
     category: "",
   };
 
-  const {setSnackBarState} = useSnackBar()
-
-  useEffect(()=>{
-      if(error) setSnackBarState({display: true, type: "error", message: "Error while creating new blog post"})
-      if(data) setSnackBarState({display: true, type: "success", message: "Successfully Created New Blog Post"})
-  }, [error, data])
+  useEffect(() => {
+    if (error)
+      setSnackBarState({
+        display: true,
+        type: "error",
+        message: "Error while creating new blog post",
+      });
+    if (data) {
+      setSnackBarState({
+        display: true,
+        type: "success",
+        message: "Successfully Created New Blog Post",
+      });
+      //if success, navigate to previous page
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
+    }
+  }, [error, data]);
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initialFormValues}
       onSubmit={(values, errors) => {
-        alert(JSON.stringify(values));
         addNewBlogPost({ variables: { blog: values } });
-        if (error) {
-          alert("Oh no error happend");
-        }
       }}
+      validationSchema={Yup.object({
+        title: Yup.string().trim().required("Blog Title is required"),
+        content: Yup.mixed().test(
+          "checkContent",
+          "Content is required",
+          function (value: any) {
+            const state = stateFromHTML(value);
+
+            return state.hasText() && value;
+          }
+        ),
+      })}
     >
       {(formik) => (
         <div className="form-container" style={{ paddingTop: "20px" }}>
-          <div className="form-body">
-            <div className="d-flex flex-column">
-              <div className="form-group">
-                <label>Title</label>
-                <input
-                  name="title"
-                  type="text"
-                  className="form-control"
-                  value={formik.values.title}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div className="form-group">
-                <label>Subtitle</label>
-                <textarea
-                  rows={3}
-                  name="subtitle"
-                  className="form-control"
-                  value={formik.values.subtitle}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div className="form-group">
-                <label>Content</label>
-                <input
-                  name="content"
-                  type="text"
-                  className="form-control"
-                  value={formik.values.content}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div className="form-group">
-                <div className="form-check form-switch">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckChecked"
-                    name="published"
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="flexSwitchCheckChecked"
-                  >
-                    Published
-                  </label>
-                </div>
-              </div>
-              <div>
-                <button
-                  className="btn btn-primary"
-                  type="submit"
-                  onClick={() => formik.handleSubmit()}
-                >
-                  <div className="d-flex">
-                    <Save24 /> &nbsp;
-                    <span>Save</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
+          <span>Add New Blog Post</span>
+          <BlogForm formik={formik} loading={loading} />
         </div>
       )}
     </Formik>
@@ -124,3 +92,120 @@ const AddNewBlogs = () => {
 };
 
 export default AddNewBlogs;
+
+export const BlogForm = ({ formik, loading }: any) => {
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createEmpty());
+
+    useEffect(()=>{
+        if (formik && formik.initialValues && !formik.dirty){
+            setEditorState(EditorState.createWithContent(stateFromHTML(formik.initialValues.content)))
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formik.initialValues.content])
+
+  const handleEditorStateChange = (newEditorState: EditorState) => {
+    setEditorState(newEditorState);
+    const htmlText = stateToHTML(newEditorState.getCurrentContent());
+    formik.setFieldValue("content", htmlText);
+  };
+  return (
+    <div className="form-body">
+      <div className="d-flex flex-column">
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            name="title"
+            type="text"
+            className={clsx(
+              "form-control",
+              formik.errors.title && formik.touched.title ? "is-invalid" : ""
+            )}
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <span className="invalid-feedback">
+            <ErrorMessage name="title" />
+          </span>
+        </div>
+        <div className="form-group">
+          <label>Subtitle</label>
+          <textarea
+            rows={3}
+            name="subtitle"
+            className="form-control"
+            value={formik.values.subtitle}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <span className="invalid-feedback">
+            <ErrorMessage name="subtitle" />
+          </span>
+        </div>
+        <div className="form-group">
+          <label>Content</label>
+         
+          {/* <input
+              name="content"
+              type="text"
+              className={clsx(
+                "form-control",
+                formik.errors.content && formik.touched.content
+                  ? "is-invalid"
+                  : ""
+              )}
+              value={formik.values.content}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            /> */}
+            <input name = "content" hidden/>
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            onEditorStateChange={handleEditorStateChange}
+            onBlur={() => formik.setFieldTouched("content", true)}
+         
+          />
+           {formik.errors?.content && formik.touched?.content && (
+            <span className = "invalid-feedback-text" style={{color:'red'}}>{formik.errors?.content} </span>
+          )}
+        </div>
+        <div className="form-group">
+          <div className="form-check form-switch">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckChecked"
+              name="published"
+            />
+            <label
+              className="form-check-label"
+              htmlFor="flexSwitchCheckChecked"
+            >
+              Published
+            </label>
+          </div>
+        </div>
+        <div>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <button
+              className="btn btn-primary"
+              type="submit"
+              onClick={() => formik.handleSubmit()}
+            >
+              <div className="d-flex">
+                <Save24 /> &nbsp;
+                <span>Save</span>
+              </div>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

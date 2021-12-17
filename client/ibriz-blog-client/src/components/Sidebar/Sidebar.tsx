@@ -1,5 +1,6 @@
 
 import {Home24} from '@carbon/icons-react';
+import { NavLink } from 'react-router-dom';
 import './Sidebar.scss'
 
 
@@ -30,15 +31,15 @@ const Sidebar = ({
     <nav className="sidebar"  id="sidebar">
       <ul>
         
-          {/* <NavLink
+          <NavLink
             className="sidebar-link"
-            to={`/`}
+            to={`/admin/dashboard`}
             style={{ textDecoration: "none" }}
             // isActive={(match, location) => {
             //   return match?.url === location.pathname;
             // }}
-          > */}
-          <a className = "sidebar-link">
+          >
+       
 
             <li key="home">
               <Home24 data-view={view} />
@@ -46,7 +47,7 @@ const Sidebar = ({
                 Home
               </span>
             </li>
-          </a>
+          </NavLink>
         
       
         {routes?.map((route: SidebarProps) => (
