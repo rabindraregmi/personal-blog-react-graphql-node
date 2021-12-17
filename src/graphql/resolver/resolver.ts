@@ -5,6 +5,7 @@ import { Resolvers } from "../../generated/types";
 const resolvers: Resolvers = {
   Query: {
     getCategories: async () => await CategoryModel.find(),
+    getAllBlogPost: async () => await BlogModel.find().populate("category"),
   },
   Mutation: {
     createCategory: async (_, { category }) => {
