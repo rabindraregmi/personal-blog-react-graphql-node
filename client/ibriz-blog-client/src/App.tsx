@@ -1,5 +1,5 @@
 import './App.css';
-import AdminPage  from './screens/Admin/AdminPage';
+import AdminPage  from './screens/Admin/AdminDashboardPage';
 
 const  App=() => {
 
