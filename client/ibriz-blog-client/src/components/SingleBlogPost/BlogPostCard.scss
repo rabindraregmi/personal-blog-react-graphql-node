@@ -1,8 +1,8 @@
 p {
   margin-bottom: 0px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #7a7a7a;
+  font-size: 18px;
+  font-weight: normal;
+  color: #000000;
   line-height: 30px;
 }
 a {
@@ -27,6 +27,7 @@ h6 {
 
 .blog-posts {
   margin-top: 10px;
+  width: 100%;
 }
 
 .blog-posts .blog-post {
@@ -51,17 +52,16 @@ h6 {
 .blog-posts .down-content span {
   font-size: 18px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 900;
-  color: #f48840;
+  font-weight: normal;
+  color: #024869;
 }
 
 .blog-posts .down-content h4 {
-  font-size: 24px;
+  font-size: 32px;
   text-transform: capitalize;
   letter-spacing: 0.5px;
-  font-weight: 900;
-  color: #20232e;
+  font-weight: 400;
+  color: #333;
   margin: 10px 0px 12px 0px;
 }
 
@@ -76,11 +76,6 @@ h6 {
   margin-left: 8px;
 }
 
-.blog-posts .down-content h4 {
-  font-size: 20px;
-  letter-spacing: 0.25px;
-}
-
 .grid-system .down-content ul.post-info li {
   margin-right: 3px;
 }
@@ -93,22 +88,29 @@ h6 {
   display: none;
 }
 
-.blog-posts .down-content ul.post-info li a {
+.blog-posts .down-content ul.post-info li span {
   font-size: 14px;
   color: #aaa;
   font-weight: 400;
   transition: all 0.3s;
 }
 
-.blog-posts .down-content ul.post-info li a:hover {
-  color: #f48840;
-}
-
-.blog-posts .down-content p {
-  padding: 25px 0px;
-  margin: 25px 0px;
+p.content-summary {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* number of lines to show */
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.blog-posts .down-content .content {
+  padding: 10px 0px;
+  margin: 10px 0px;
+
+  text-align: justify;
 }
 
 .blog-posts .down-content ul.post-share {

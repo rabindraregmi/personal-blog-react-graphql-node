@@ -2,31 +2,39 @@ import "./BlogPostCard.scss";
 
 import moment from "moment";
 import { Calendar16 } from "@carbon/icons-react";
+import { NavLink } from "react-router-dom";
+import clsx from "clsx";
+import parse from "html-react-parser";
 
-const BlogPostCard = ({ blog }: any) => {
+const BlogPostCard = ({ blog, size = "sm" }: any) => {
   return (
     <div className="blog-post">
-      <div className="blog-thumb">
+      {/* <div className="blog-thumb">
         <img src="" alt="" />
-      </div>
+      </div> */}
       <div className="down-content">
-        <span>Lifestyle</span>
-        <a href="post-details.html">
+        {size === "sm" ? (
+          <NavLink to={`/view_blog/${blog?.id}`}>
+            <h4>{blog?.title}</h4>
+          </NavLink>
+        ) : (
           <h4>{blog?.title}</h4>
-        </a>
+        )}
+
         <ul className="post-info">
-          {/* <li>
-            <a href="#">Admin</a>
-          </li> */}
           <li>
             <Calendar16 />
-            {moment(Number(blog?.created_at)).format("LL")}
+            <span>{moment(Number(blog?.created_at)).format("LL")}</span>
           </li>
-          {/* <li>
-            <a href="#">12 Comments</a>
-          </li> */}
+          <li>
+            <span>Sports</span>
+          </li>
         </ul>
-        <p>{blog?.content?.replace(/<[^>]+>/g, "").substring(0, 300)}</p>
+        <p className={clsx("content", size === "sm" ? "content-summary" : "")}>
+          {size === "sm"
+            ? blog?.content?.replace(/<[^>]+>/g, "")
+            : parse(blog?.content || "")}
+        </p>
       </div>
     </div>
   );

@@ -1,0 +1,99 @@
+@import "../../assets/style/variables.scss";
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.user-right-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: auto;
+  left: 20px;
+  padding: 20px;
+
+  background: $gray2;
+  box-shadow: inset;
+  font-size: 0.875rem;
+  transition: width 0.2s ease-out 0.1s;
+  padding-bottom: 66px;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  ul {
+    margin: 0 auto;
+    display: flex;
+    //padding: 10px;
+    flex-direction: column;
+    list-style: none;
+  }
+
+  .sidebar-item {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .sidebar-heading h2 {
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #20232e;
+    border-bottom: 1px solid rgb(194, 192, 192);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+  }
+  .recent-posts ul li {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .recent-posts ul li:last-child {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-bottom: none;
+  }
+
+  .recent-posts ul li h5 {
+    font-size: 19px;
+
+    color: #20232e;
+    line-height: 30px;
+    transition: all 0.3s;
+  }
+
+  .recent-posts ul li h5:hover {
+    color: #f48840;
+  }
+
+  .recent-posts ul li span {
+    display: block;
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 8px;
+  }
+  .categories ul li {
+    margin-bottom: 15px;
+  }
+
+  .categories ul li:last-child {
+    margin-bottom: 0px;
+  }
+
+  .categories ul li span {
+    font-size: 15px;
+    font-weight: 700;
+    color: #20232e;
+    transition: all 0.3s;
+  }
+
+  .categories ul li span:hover {
+    color: #f48840;
+  }
+}

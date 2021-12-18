@@ -10,7 +10,7 @@ const UserLandingPage = () => {
   ) : (
     <>
       <div className="blog-posts">
-        {blogs.getAllBlogPost.map((blog: any, index: any) => {
+        {blogs?.getAllBlogPost?.slice(0, 5).map((blog: any, index: any) => {
           return <BlogPostCard key={index} blog={blog} />;
         })}
       </div>

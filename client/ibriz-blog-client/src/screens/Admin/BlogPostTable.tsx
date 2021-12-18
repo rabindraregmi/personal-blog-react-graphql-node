@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import moment from "moment";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
@@ -19,7 +20,7 @@ export const GET_ALL_BLOGS = gql`
 `;
 const BlogPostTable = () => {
   const { loading, data } = useQuery(GET_ALL_BLOGS);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const tableHeaders = useMemo(
     () => [
@@ -45,49 +46,51 @@ const BlogPostTable = () => {
 
   const tableData = useMemo(() => {
     if (data) {
-      return data.getAllBlogPost;
+      return data.getAllBlogPost.map((blog: any) => {
+        return {
+          ...blog,
+          created_at: moment(Number(blog.created_at)).format("YYYY/MM/DD"),
+          content: blog.content.replace(/<[^>]+>/g, ""),
+        };
+      });
     } else return [];
   }, [data]);
 
   const tabMapping = {
     ALL: ["ALL", "All"],
     PUBLISHED: ["PUBLISHED", "Published Blogs"],
-    UNPUBLISHED: ["UNPUBLISHED", "Unpublished Blogs"]
+    UNPUBLISHED: ["UNPUBLISHED", "Unpublished Blogs"],
   };
 
   const handleRowClick = (id: String) => {
-   // alert(id);
-    navigate(`edit_blog/${id}`)
+    // alert(id);
+    navigate(`edit_blog/${id}`);
   };
 
   const handleEditClick = (id: String) => {
-    navigate(`edit_blog/${id}`)
-  }
+    navigate(`edit_blog/${id}`);
+  };
 
   const handleDeleteClick = (id: String) => {
-      alert("Delete Clicked" + id)
-  }
+    alert("Delete Clicked" + id);
+  };
 
   return (
     <div className="blog-post-table" style={{ paddingTop: "20px" }}>
       {loading ? (
         <div>Data are loading </div>
       ) : (
-        <TabModule
-        tabMapping={JSON.stringify(tabMapping)}
-        selected={"ALL"}
-        
-        >
-        <Table
-          columns={tableHeaders}
-          data={tableData}
-          handleRowClick={handleRowClick}
-          handleEditClick = {handleEditClick}
-          handleDeleteClick = {handleDeleteClick}
-          componentName = "ALL"
+        <TabModule tabMapping={JSON.stringify(tabMapping)} selected={"ALL"}>
+          <Table
+            columns={tableHeaders}
+            data={tableData}
+            handleRowClick={handleRowClick}
+            handleEditClick={handleEditClick}
+            handleDeleteClick={handleDeleteClick}
+            componentName="ALL"
           />
           <span></span>
-          </TabModule>
+        </TabModule>
       )}
     </div>
   );

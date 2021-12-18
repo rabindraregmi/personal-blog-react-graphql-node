@@ -15,6 +15,10 @@ dotenv.config();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  cors: {
+    origin: "*", // <- allow request from all domains
+    credentials: true,
+  },
 });
 
 // The `listen` method launches a web server.

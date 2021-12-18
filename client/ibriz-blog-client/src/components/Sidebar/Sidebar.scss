@@ -7,9 +7,9 @@
 .sidebar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  position: absolute;
+  position: fixed;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   width: 260px;
   height: 100vh;
   left: 0px;

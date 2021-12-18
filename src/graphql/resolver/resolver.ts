@@ -5,7 +5,18 @@ import { Resolvers } from "../../generated/types";
 const resolvers: Resolvers = {
   Query: {
     getCategories: async () => await CategoryModel.find(),
-    getAllBlogPost: async () => await BlogModel.find().populate("category"),
+    getAllBlogPost: async () =>
+      await BlogModel.find().populate("category").sort({ created_at: "desc" }),
+    getOneBlogPost: async (_, { id }) => {
+      try {
+        const blog = await BlogModel.exists({ _id: id });
+
+        if (!blog) throw new Error("Blog Doesn't Exist");
+        return BlogModel.findById(id);
+      } catch (error) {
+        throw new Error("Blog for given ID not found");
+      }
+    },
   },
   Mutation: {
     createCategory: async (_, { category }) => {
@@ -39,17 +50,16 @@ const resolvers: Resolvers = {
     },
     editBlogPost: async (_, { blog }) => {
       const { id, title, subtitle, content, published, category } = blog;
-      const _blog = await BlogModel.findOne({ id });
+      const _blog = await BlogModel.exists({ _id: id });
 
       if (!_blog) throw new Error("Blog Doesn't Exist");
 
       try {
         const newBlog = BlogModel.findByIdAndUpdate(id, {
-          title,
-          subtitle,
-          content,
-          published,
-          created_at: Date.now(),
+          title: title,
+          subtitle: subtitle,
+          content: content,
+          published: published,
           updated_at: Date.now(),
         });
 
