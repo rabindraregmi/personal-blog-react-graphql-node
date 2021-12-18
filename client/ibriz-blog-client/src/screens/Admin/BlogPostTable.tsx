@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
+import TabModule from "../../components/TabModule/TabModule";
 
 export const GET_ALL_BLOGS = gql`
   query GetAllBlogs {
@@ -48,6 +49,12 @@ const BlogPostTable = () => {
     } else return [];
   }, [data]);
 
+  const tabMapping = {
+    ALL: ["ALL", "All"],
+    PUBLISHED: ["PUBLISHED", "Published Blogs"],
+    UNPUBLISHED: ["UNPUBLISHED", "Unpublished Blogs"]
+  };
+
   const handleRowClick = (id: String) => {
    // alert(id);
     navigate(`edit_blog/${id}`)
@@ -58,11 +65,19 @@ const BlogPostTable = () => {
       {loading ? (
         <div>Data are loading </div>
       ) : (
+        <TabModule
+        tabMapping={JSON.stringify(tabMapping)}
+        selected={"ALL"}
+        
+        >
         <Table
           columns={tableHeaders}
           data={tableData}
           handleRowClick={handleRowClick}
-        />
+          componentName = "ALL"
+          />
+          <span></span>
+          </TabModule>
       )}
     </div>
   );

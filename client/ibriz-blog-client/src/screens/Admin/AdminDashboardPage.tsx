@@ -1,22 +1,20 @@
+import { Add20, Add24 } from "@carbon/icons-react";
 import { Link } from "react-router-dom";
+import Button from "../../components/Button/button";
 import "./AdminDashboard.scss";
 import BlogPostTable from "./BlogPostTable";
 
 const AdminPage = () => {
-
   return (
     <div className="d-flex flex-column">
-      <div>
-        <Link
-        to="add_blog"
-        >
-        <button
-          className="btn btn-success"
-          >
-          + Add New Post
-        </button>
-          </Link>
+      <div className = "add-blog-button">
+
+   
+        <Link to="add_blog">
+          <Button label="Add New Blog Post" Icon={<Add24 />} />
+        </Link>
       </div>
+    
 
       <BlogPostTable />
     </div>

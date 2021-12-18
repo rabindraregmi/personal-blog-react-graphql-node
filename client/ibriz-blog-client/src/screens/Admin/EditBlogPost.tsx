@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Formik } from "formik";
 import { useEffect, useMemo } from "react";
@@ -7,6 +8,7 @@ import { GET_ALL_BLOGS } from "./BlogPostTable";
 import * as Yup from "yup";
 import { BlogForm } from "./AddNewBlogs";
 import { stateFromHTML } from "draft-js-import-html";
+import { ArrowLeft24 } from "@carbon/icons-react";
 
 const EDIT_BLOG_POST = gql`
   mutation EditBlogPost($blog: BlogInput!) {
@@ -130,7 +132,12 @@ const EditBlogPost = () => {
       >
         {(formik) => (
           <div className="form-container" style={{ paddingTop: "20px" }}>
-            <span>Add New Blog Post</span>
+               <div className = "form-header">
+            <ArrowLeft24 onClick={()=> navigate(-1)} />
+            <span>
+              Edit Blog Post
+            </span>
+            </div>
             <BlogForm formik={formik} loading={editBlogLoading} />
           </div>
         )}

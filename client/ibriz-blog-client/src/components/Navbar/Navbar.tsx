@@ -21,30 +21,8 @@ const Navbar = ({
 
   return (
     <>
-      {/* <Snackbar
-        open={snackBar.display}
-        autoHideDuration={3000}
-        onClose={() => dispatch(resetSnackBarAction())}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-      >
-        <Alert
-          onClose={() => dispatch(resetSnackBarAction())}
-          severity={
-            snackBar.type === SNACKBAR_TYPE.SUCCESS
-              ? "success"
-              : snackBar.type === SNACKBAR_TYPE.ERROR
-              ? "error"
-              : snackBar.type === SNACKBAR_TYPE.INFO
-              ? "info"
-              : "warning"
-          }
-        >
-          {snackBar.message}
-        </Alert>
-      </Snackbar> */}
       <nav
         className="navbar navbar-expand"
-        style={{ backgroundColor: "#214869" }}
       >
         <div className="navbar-brand">
           {/* <img className="logo" src={logo} alt="logo" /> */}

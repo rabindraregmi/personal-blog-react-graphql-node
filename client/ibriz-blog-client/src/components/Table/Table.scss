@@ -101,8 +101,18 @@
   }
   .pagination {
     margin-bottom: 0;
+    button {
+      border: 0px;
+      background-color: white;
+    }
+    button:active {
+      border: 0px;
+      background-color: white;
+    }
     .fa {
-      font-size: 24px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
     }
   }
   select.borderless {

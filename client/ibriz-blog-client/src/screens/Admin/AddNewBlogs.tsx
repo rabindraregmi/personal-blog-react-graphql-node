@@ -1,5 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
-import { Save24 } from "@carbon/icons-react";
+import { ArrowLeft24, Save24 } from "@carbon/icons-react";
 import { CircularProgress } from "@material-ui/core";
 import { ErrorMessage, Formik } from "formik";
 import { useEffect, useState } from "react";
@@ -83,7 +83,12 @@ const AddNewBlogs = () => {
     >
       {(formik) => (
         <div className="form-container" style={{ paddingTop: "20px" }}>
-          <span>Add New Blog Post</span>
+          <div className = "form-header">
+            <ArrowLeft24 onClick={()=> navigate(-1)} />
+            <span>
+              Add New Blog Post
+            </span>
+            </div>
           <BlogForm formik={formik} loading={loading} />
         </div>
       )}
