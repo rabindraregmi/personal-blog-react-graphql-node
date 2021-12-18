@@ -1,0 +1,10 @@
+.user-landing-page {
+  align-items: flex-end;
+  .pagination {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .btn:active {
+    box-shadow: 0px !important;
+  }
+}
