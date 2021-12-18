@@ -2,7 +2,7 @@ import { Delete16, Delete24, Edit16, Edit24 } from "@carbon/icons-react";
 import { usePagination, useTable } from "react-table";
 import "./Table.scss";
 
-const Table = ({ columns, data, handleRowClick}: any) => {
+const Table = ({ columns, data, handleRowClick, handleDeleteClick, handleEditClick}: any) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -16,7 +16,6 @@ const Table = ({ columns, data, handleRowClick}: any) => {
     canPreviousPage,
     canNextPage,
     pageOptions,
-    pageCount,
     gotoPage,
     nextPage,
     previousPage,
@@ -71,7 +70,7 @@ const Table = ({ columns, data, handleRowClick}: any) => {
                 prepareRow(row);
                 return (
                   // Apply the row props
-                  <tr {...row.getRowProps()}>
+                  <tr {...row.getRowProps()} onClick={(e)=> handleRowClick((row.original as any).id)} className = "table-body-row">
                     {
                       // Loop over the rows cells
                       row.cells.map((cell:any, index:number) => {
@@ -90,14 +89,18 @@ const Table = ({ columns, data, handleRowClick}: any) => {
                       })
                     }
                     <td>
-                      <div className = "d-flex">
-                        <Edit24 color="blue" onClick={()=>{
-                          handleRowClick((row.original as any).id)}
+                      <div className = "d-flex action-buttons">
+                        <Edit24 color="blue" onClick={(e)=>{
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleEditClick((row.original as any).id)}
                           
                           }/> &nbsp; &nbsp;
                         <Delete24 color="red" 
-                          onClick={()=>{
-                          handleRowClick((row.original as any).id)}
+                          onClick={(e)=>{
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleDeleteClick((row.original as any).id)}
                           }
                         />
 

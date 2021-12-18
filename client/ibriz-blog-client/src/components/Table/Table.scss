@@ -23,7 +23,6 @@
     margin-bottom: 0px;
     font-size: 0.875rem;
     width: 100%;
-
     th {
       //display: flex;
       overflow: visible;
@@ -59,17 +58,8 @@
     }
 
     tbody {
-      tr {
-        &:hover {
-          &[data-view="CO"] {
-            background-color: $table-co-row-hover;
-          }
-        }
-        &.is-active {
-          &[data-view="CO"] {
-            background-color: $table-co-row-selected;
-          }
-        }
+      tr:hover {
+        background-color: #3e66fb;
       }
       td {
         padding: 6px 12px;
@@ -84,6 +74,15 @@
       }
     }
   }
+}
+.action-buttons {
+  svg {
+    cursor: pointer;
+  }
+}
+.table-body-row:hover {
+  background-color: #02486933 !important;
+  cursor: pointer;
 }
 
 .paginate {

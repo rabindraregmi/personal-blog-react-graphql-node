@@ -60,6 +60,14 @@ const BlogPostTable = () => {
     navigate(`edit_blog/${id}`)
   };
 
+  const handleEditClick = (id: String) => {
+    navigate(`edit_blog/${id}`)
+  }
+
+  const handleDeleteClick = (id: String) => {
+      alert("Delete Clicked" + id)
+  }
+
   return (
     <div className="blog-post-table" style={{ paddingTop: "20px" }}>
       {loading ? (
@@ -74,6 +82,8 @@ const BlogPostTable = () => {
           columns={tableHeaders}
           data={tableData}
           handleRowClick={handleRowClick}
+          handleEditClick = {handleEditClick}
+          handleDeleteClick = {handleDeleteClick}
           componentName = "ALL"
           />
           <span></span>

@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import AdminDashboardHOC from "../hoc/AdminDashboard";
+import UserDashboardHOC from "../hoc/UserDashboard";
 import AddNewBlogs from "../screens/Admin/AddNewBlogs";
 import AdminPage from "../screens/Admin/AdminDashboardPage";
 import NotFoundPage from "../screens/NotFoundPage/NotFoundPage";
@@ -12,7 +13,7 @@ const AuthorizedRouting = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element = {<div>Hello</div>}/>
+        <Route path="/*" element = {<UserDashboardHOC/>}/>
         <Route path="/admin/dashboard/*" element = {<AdminDashboardHOC/>}/>
        
             {/* <PrivateRoute path="/codashboard">

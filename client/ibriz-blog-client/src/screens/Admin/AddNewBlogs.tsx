@@ -148,7 +148,7 @@ export const BlogForm = ({ formik, loading }: any) => {
             <ErrorMessage name="subtitle" />
           </span>
         </div>
-        <div className="form-group">
+        <div className="form-group d-flex flex-column align-items-start">
           <label>Content</label>
          
           {/* <input
@@ -164,7 +164,8 @@ export const BlogForm = ({ formik, loading }: any) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             /> */}
-            <input name = "content" hidden/>
+           <div>
+
           <Editor
             editorState={editorState}
             toolbarClassName="toolbarClassName"
@@ -172,8 +173,9 @@ export const BlogForm = ({ formik, loading }: any) => {
             editorClassName="editorClassName"
             onEditorStateChange={handleEditorStateChange}
             onBlur={() => formik.setFieldTouched("content", true)}
-         
-          />
+            
+            />
+            </div>
            {formik.errors?.content && formik.touched?.content && (
             <span className = "invalid-feedback-text" style={{color:'red'}}>{formik.errors?.content} </span>
           )}
