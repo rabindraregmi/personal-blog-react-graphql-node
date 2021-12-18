@@ -5,8 +5,13 @@ import { Resolvers } from "../../generated/types";
 const resolvers: Resolvers = {
   Query: {
     getCategories: async () => await CategoryModel.find(),
-    getAllBlogPost: async () =>
-      await BlogModel.find().populate("category").sort({ created_at: "desc" }),
+    //@ts-ignore
+    getAllBlogPost: async (_, args) =>
+      await BlogModel.find({
+        title: { $regex: (args as any)?.search || "", $options: "i" },
+      })
+        .populate("category")
+        .sort({ created_at: "desc" }),
     getOneBlogPost: async (_, { id }) => {
       try {
         const blog = await BlogModel.exists({ _id: id });

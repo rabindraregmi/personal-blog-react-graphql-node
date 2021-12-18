@@ -65,7 +65,7 @@ type Query {
   Profile(id: ID!): Profile
 
   getOneBlogPost(id: ID!): Blog
-  getAllBlogPost: [Blog]
+  getAllBlogPost(search: String): [Blog]
   getPublishedBlogPost: [Blog]
 
   getCategories: [Category]
