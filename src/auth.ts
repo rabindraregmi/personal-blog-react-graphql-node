@@ -16,7 +16,7 @@ const getUser = async (authToken: string) => {
 
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, "SECRET_KEY_HERE");
+    decodedToken = jwt.verify(token, process.env.SECRET_KEY || "SECRET_KEY");
   } catch (error) {
     return null;
   }

@@ -1,9 +1,6 @@
-import { Close16, Close24, Close32 } from "@carbon/icons-react";
-import { CircularProgress, Modal } from "@material-ui/core";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/button";
 import CustomModal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
 import TabModule from "../../components/TabModule/TabModule";
