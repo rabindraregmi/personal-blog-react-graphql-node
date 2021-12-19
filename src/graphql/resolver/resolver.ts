@@ -69,7 +69,8 @@ const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    createUser: async (_, { user }) => {
+    createUser: async (_, { user }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       const found = await UserModel.findOne({ email: user.email });
       if (found) {
         throw new Error("User exists already.");
@@ -83,7 +84,8 @@ const resolvers: Resolvers = {
       return await newUser.save();
     },
 
-    editUser: async (_, { user }) => {
+    editUser: async (_, { user }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       //@ts-ignore
       const updateUser = await UserModel.findByIdAndUpdate(
         user?.id,
@@ -93,12 +95,14 @@ const resolvers: Resolvers = {
 
       return updateUser;
     },
-    deleteUser: async (_, { id }) => {
+    deleteUser: async (_, { id }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       const deletedUser = await UserModel.findByIdAndDelete(id);
       return deletedUser;
     },
 
-    createCategory: async (_, { category }) => {
+    createCategory: async (_, { category }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       try {
         const newCategory = new CategoryModel({
           name: category.name,
@@ -110,7 +114,8 @@ const resolvers: Resolvers = {
         throw new ValidationError(error as any);
       }
     },
-    createBlogPost: async (_, { blog }) => {
+    createBlogPost: async (_, { blog }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       const { title, subtitle, content, published, category } = blog;
       try {
         const newBlog = new BlogModel({
@@ -127,7 +132,8 @@ const resolvers: Resolvers = {
         throw new ValidationError(error as any);
       }
     },
-    editBlogPost: async (_, { blog }) => {
+    editBlogPost: async (_, { blog }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       const { id, title, subtitle, content, published, category } = blog;
       const _blog = await BlogModel.exists({ _id: id });
 
@@ -147,7 +153,8 @@ const resolvers: Resolvers = {
         throw new ValidationError(error as any);
       }
     },
-    deleteBlogPost: async (_, { id }) => {
+    deleteBlogPost: async (_, { id }, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
       const _blog = await BlogModel.findOne({ id });
 
       if (!_blog) throw new Error("Blog doesn't exist");
