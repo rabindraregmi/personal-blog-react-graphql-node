@@ -64,3 +64,8 @@ export type AuthorizeTokenQueryVariables = Types.Exact<{
 
 
 export type AuthorizeTokenQuery = { __typename?: 'Query', authorize?: boolean | null | undefined };
+
+export type GetUserProfileQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetUserProfileQuery = { __typename?: 'Query', getUserProfile?: Array<{ __typename?: 'User', email: string, profile?: { __typename?: 'Profile', full_name: string, mobile_number?: string | null | undefined, address?: string | null | undefined, intro?: string | null | undefined, social?: { __typename?: 'SocialProfile', github?: string | null | undefined, instagram?: string | null | undefined, twitter?: string | null | undefined, linkedin?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined };

@@ -36,6 +36,10 @@ const resolvers: Resolvers = {
       if (await getUser(token)) return true;
       else return false;
     },
+    getUserProfile: async () => {
+      const user = await UserModel.find().select("-password");
+      return user;
+    },
     getCategories: async () => await CategoryModel.find(),
     //@ts-ignore
     getAllBlogPost: async (_, args, context) => {
@@ -72,6 +76,7 @@ const resolvers: Resolvers = {
       }
       const hashedPassword = await bcrypt.hash(user.password as string, 12);
       const newUser = new UserModel({
+        ...user,
         email: user.email,
         password: hashedPassword,
       });

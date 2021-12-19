@@ -8,3 +8,21 @@ query Login($email: String!, $password: String!) {
 query AuthorizeToken($token: String!) {
   authorize(token: $token)
 }
+
+query GetUserProfile {
+  getUserProfile {
+    email
+    profile {
+      full_name
+      mobile_number
+      address
+      intro
+      social {
+        github
+        instagram
+        twitter
+        linkedin
+      }
+    }
+  }
+}

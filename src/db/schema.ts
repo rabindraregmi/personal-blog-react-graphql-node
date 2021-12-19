@@ -12,6 +12,45 @@ export const userSchema = new Schema({
     unique: false,
     required: true,
   },
+  profile: {
+    full_name: {
+      type: String,
+      unique: false,
+      required: true,
+    },
+    mobile_number: {
+      type: String,
+      unique: false,
+      required: false,
+    },
+    phone_number: {
+      type: String,
+      unique: false,
+      required: false,
+    },
+    address: {
+      type: String,
+      unique: false,
+      required: false,
+    },
+    intro: {
+      type: String,
+      unique: false,
+      required: false,
+    },
+    social: {
+      github: {
+        type: String,
+        required: false,
+      },
+      twitter: {
+        type: String,
+        required: false,
+      },
+      instagram: String,
+      linkedin: String,
+    },
+  },
 });
 
 export const profileSchema = new Schema({
@@ -44,6 +83,18 @@ export const profileSchema = new Schema({
     type: String,
     unique: false,
     required: false,
+  },
+  social: {
+    github: {
+      type: String,
+      required: false,
+    },
+    twitter: {
+      type: String,
+      required: false,
+    },
+    instagram: String,
+    linkedin: String,
   },
 });
 

@@ -386,3 +386,49 @@ export function useAuthorizeTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type AuthorizeTokenQueryHookResult = ReturnType<typeof useAuthorizeTokenQuery>;
 export type AuthorizeTokenLazyQueryHookResult = ReturnType<typeof useAuthorizeTokenLazyQuery>;
 export type AuthorizeTokenQueryResult = Apollo.QueryResult<Types.AuthorizeTokenQuery, Types.AuthorizeTokenQueryVariables>;
+export const GetUserProfileDocument = gql`
+    query GetUserProfile {
+  getUserProfile {
+    email
+    profile {
+      full_name
+      mobile_number
+      address
+      intro
+      social {
+        github
+        instagram
+        twitter
+        linkedin
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserProfileQuery__
+ *
+ * To run a query within a React component, call `useGetUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserProfileQuery(baseOptions?: Apollo.QueryHookOptions<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>(GetUserProfileDocument, options);
+      }
+export function useGetUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>(GetUserProfileDocument, options);
+        }
+export type GetUserProfileQueryHookResult = ReturnType<typeof useGetUserProfileQuery>;
+export type GetUserProfileLazyQueryHookResult = ReturnType<typeof useGetUserProfileLazyQuery>;
+export type GetUserProfileQueryResult = Apollo.QueryResult<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>;

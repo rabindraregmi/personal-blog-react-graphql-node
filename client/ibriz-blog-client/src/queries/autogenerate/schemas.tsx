@@ -58,14 +58,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   createBlogPost?: Maybe<Blog>;
   createCategory?: Maybe<Category>;
-  createProfile?: Maybe<Profile>;
   createUser?: Maybe<User>;
   deleteBlogPost?: Maybe<Blog>;
   deleteCategory?: Maybe<Category>;
   deleteUser?: Maybe<User>;
   editBlogPost?: Maybe<Blog>;
   editCategory?: Maybe<Category>;
-  editProfile?: Maybe<Profile>;
   editUser?: Maybe<User>;
 };
 
@@ -77,11 +75,6 @@ export type MutationCreateBlogPostArgs = {
 
 export type MutationCreateCategoryArgs = {
   category: CategoryInput;
-};
-
-
-export type MutationCreateProfileArgs = {
-  profile?: InputMaybe<ProfileInput>;
 };
 
 
@@ -115,11 +108,6 @@ export type MutationEditCategoryArgs = {
 };
 
 
-export type MutationEditProfileArgs = {
-  profile?: InputMaybe<ProfileInput>;
-};
-
-
 export type MutationEditUserArgs = {
   user: UserInput;
 };
@@ -127,27 +115,23 @@ export type MutationEditUserArgs = {
 export type Profile = {
   __typename?: 'Profile';
   address?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
   full_name: Scalars['String'];
-  id: Scalars['ID'];
   intro?: Maybe<Scalars['String']>;
   mobile_number?: Maybe<Scalars['String']>;
-  phone_number?: Maybe<Scalars['String']>;
+  social?: Maybe<SocialProfile>;
 };
 
 export type ProfileInput = {
   address?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
   full_name?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
   intro?: InputMaybe<Scalars['String']>;
   mobile_number?: InputMaybe<Scalars['String']>;
   phone_number?: InputMaybe<Scalars['String']>;
+  social?: InputMaybe<SocialProfileInput>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  Profile?: Maybe<Profile>;
   User?: Maybe<User>;
   Users?: Maybe<Array<Maybe<User>>>;
   authorize?: Maybe<Scalars['Boolean']>;
@@ -155,12 +139,8 @@ export type Query = {
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getOneBlogPost?: Maybe<Blog>;
   getPublishedBlogPost?: Maybe<Array<Maybe<Blog>>>;
+  getUserProfile?: Maybe<Array<Maybe<User>>>;
   login: AuthData;
-};
-
-
-export type QueryProfileArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -194,15 +174,32 @@ export type QueryLoginArgs = {
   password: Scalars['String'];
 };
 
+export type SocialProfile = {
+  __typename?: 'SocialProfile';
+  github?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  linkedin?: Maybe<Scalars['String']>;
+  twitter?: Maybe<Scalars['String']>;
+};
+
+export type SocialProfileInput = {
+  github?: InputMaybe<Scalars['String']>;
+  instagram?: InputMaybe<Scalars['String']>;
+  linkedin?: InputMaybe<Scalars['String']>;
+  twitter?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
   id: Scalars['ID'];
   password: Scalars['String'];
+  profile?: Maybe<Profile>;
 };
 
 export type UserInput = {
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   password?: InputMaybe<Scalars['String']>;
+  profile?: InputMaybe<ProfileInput>;
 };

@@ -1,21 +1,24 @@
 scalar Date
 
+type SocialProfile {
+  github: String
+  instagram: String
+  twitter: String
+  linkedin: String
+}
+type Profile {
+  full_name: String!
+  mobile_number: String
+  address: String
+  intro: String
+  social: SocialProfile
+}
 type User {
   id: ID!
   email: String!
   password: String!
+  profile: Profile
 }
-
-type Profile {
-  id: ID!
-  full_name: String!
-  email: String
-  mobile_number: String
-  phone_number: String
-  address: String
-  intro: String
-}
-
 type Category {
   id: ID!
   name: String!
@@ -38,17 +41,6 @@ input CategoryInput {
   name: String
   description: String
 }
-
-input ProfileInput {
-  id: ID
-  full_name: String
-  email: String
-  mobile_number: String
-  phone_number: String
-  address: String
-  intro: String
-}
-
 input BlogInput {
   id: ID
   title: String
@@ -58,10 +50,26 @@ input BlogInput {
   category: ID
 }
 
+input SocialProfileInput {
+  github: String
+  instagram: String
+  twitter: String
+  linkedin: String
+}
+input ProfileInput {
+  full_name: String
+  mobile_number: String
+  phone_number: String
+  address: String
+  intro: String
+  social: SocialProfileInput
+}
+
 input UserInput {
   id: ID
   email: String
   password: String
+  profile: ProfileInput
 }
 
 type AuthData {
@@ -73,15 +81,13 @@ type AuthData {
 type Query {
   User(id: ID!): User
   Users: [User]
-
-  Profile(id: ID!): Profile
-
   getOneBlogPost(id: ID!): Blog
   getAllBlogPost(search: String): [Blog]
   getPublishedBlogPost(search: String): [Blog]
   getCategories: [Category]
   login(email: String!, password: String!): AuthData!
   authorize(token: String!): Boolean
+  getUserProfile: [User]
 }
 
 type Mutation {
@@ -93,10 +99,8 @@ type Mutation {
   editCategory(category: CategoryInput!): Category
   deleteCategory(id: ID!): Category
 
-  createProfile(profile: ProfileInput): Profile
-  editProfile(profile: ProfileInput): Profile
-
   createBlogPost(blog: BlogInput!): Blog
   editBlogPost(blog: BlogInput!): Blog
+
   deleteBlogPost(id: ID!): Blog
 }
