@@ -4,18 +4,12 @@ import _ from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { GET_ALL_BLOGS } from "../../screens/Admin/BlogPostTable";
+import {
+  useGetAllPublishedBlogsQuery,
+  useGetCategoriesQuery,
+  useGetFilteredPublicBlogPostLazyQuery,
+} from "../../queries/autogenerate/hooks";
 import "./UserRightBar.scss";
-
-const GET_ALL_CATEGORIES = gql`
-  query GetCategories {
-    getCategories {
-      name
-      id
-      description
-    }
-  }
-`;
 
 const UserRightBar = () => {
   return (
@@ -27,7 +21,7 @@ const UserRightBar = () => {
 };
 
 const CategoriesSection = () => {
-  const { data: allCategories } = useQuery(GET_ALL_CATEGORIES);
+  const { data: allCategories } = useGetCategoriesQuery();
   return (
     <div className="sidebar-item categories">
       <div className="sidebar-heading">
@@ -48,19 +42,9 @@ const CategoriesSection = () => {
   );
 };
 
-const GET_FILTERED_BLOGS = gql`
-  query GetFilteredBlogPost($search: String) {
-    getAllBlogPost(search: $search) {
-      title
-      created_at
-      id
-    }
-  }
-`;
-
 const RecentPostSection = () => {
-  const [getFilteredBlogs, { loading, data: allBlogs, error }] =
-    useLazyQuery(GET_FILTERED_BLOGS);
+  const [getFilteredBlogs, { loading, data: allBlogs }] =
+    useGetFilteredPublicBlogPostLazyQuery();
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
@@ -95,7 +79,7 @@ const RecentPostSection = () => {
             <CircularProgress />
           ) : (
             <ul>
-              {allBlogs?.getAllBlogPost
+              {allBlogs?.getPublishedBlogPost
                 ?.slice(0, 4)
                 .map((blog: any, index: any) => {
                   return (

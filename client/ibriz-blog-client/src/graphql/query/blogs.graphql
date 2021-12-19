@@ -1,0 +1,83 @@
+query GetOneBlogPost($getOneBlogPostId: ID!) {
+  getOneBlogPost(id: $getOneBlogPostId) {
+    title
+    subtitle
+    content
+    published
+    created_at
+    id
+    category {
+      name
+    }
+  }
+}
+
+mutation CreateNewBlogPost($blog: BlogInput!) {
+  createBlogPost(blog: $blog) {
+    title
+    subtitle
+    content
+    published
+  }
+}
+
+mutation EditBlogPost($blog: BlogInput!) {
+  editBlogPost(blog: $blog) {
+    title
+    subtitle
+    content
+    published
+  }
+}
+
+query GetAllBlogs {
+  getAllBlogPost {
+    id
+    title
+    subtitle
+    content
+    published
+    created_at
+    updated_at
+    category {
+      name
+    }
+  }
+}
+query GetAllPublishedBlogs {
+  getPublishedBlogPost {
+    id
+    title
+    subtitle
+    content
+    published
+    created_at
+    category {
+      name
+    }
+  }
+}
+
+query GetCategories {
+  getCategories {
+    name
+    id
+    description
+  }
+}
+
+query GetFilteredBlogPost($search: String) {
+  getAllBlogPost(search: $search) {
+    title
+    created_at
+    id
+    content
+  }
+}
+query GetFilteredPublicBlogPost($search: String) {
+  getPublishedBlogPost(search: $search) {
+    title
+    created_at
+    id
+  }
+}

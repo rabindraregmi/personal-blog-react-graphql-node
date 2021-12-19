@@ -1,0 +1,10 @@
+query Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    userId
+    token
+    tokenExpiration
+  }
+}
+query AuthorizeToken($token: String!) {
+  authorize(token: $token)
+}

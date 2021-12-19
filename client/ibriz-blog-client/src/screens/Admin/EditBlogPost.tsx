@@ -1,38 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Formik } from "formik";
 import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackBar } from "../../context/SnackbarContext";
-import { GET_ALL_BLOGS } from "./BlogPostTable";
 import * as Yup from "yup";
 import { BlogForm } from "./AddNewBlogs";
 import { stateFromHTML } from "draft-js-import-html";
 import { ArrowLeft24 } from "@carbon/icons-react";
-
-const EDIT_BLOG_POST = gql`
-  mutation EditBlogPost($blog: BlogInput!) {
-    editBlogPost(blog: $blog) {
-      title
-      subtitle
-      content
-      published
-    }
-  }
-`;
-
-export const GET_SINGLE_BLOG_POST = gql`
-  query GetOneBlogPost($getOneBlogPostId: ID!) {
-    getOneBlogPost(id: $getOneBlogPostId) {
-      title
-      subtitle
-      content
-      published
-      created_at
-      id
-    }
-  }
-`;
+import {
+  GetAllBlogsDocument,
+  useEditBlogPostMutation,
+  useGetOneBlogPostLazyQuery,
+} from "../../queries/autogenerate/hooks";
 
 const EditBlogPost = () => {
   const { setSnackBarState } = useSnackBar();
@@ -42,18 +21,10 @@ const EditBlogPost = () => {
   const [
     editBlogPost,
     { data: editBlogData, loading: editBlogLoading, error: editBlogError },
-  ] = useMutation(EDIT_BLOG_POST, {
-    refetchQueries: [GET_ALL_BLOGS, "GetAllBlogs"],
-  });
+  ] = useEditBlogPostMutation({ refetchQueries: [GetAllBlogsDocument] });
 
-  const [
-    getSingleBlogPost,
-    {
-      called: isSelectedBlogCalled,
-      error: selectedBlogError,
-      data: selectedBlog,
-    },
-  ] = useLazyQuery(GET_SINGLE_BLOG_POST);
+  const [getSingleBlogPost, { error: selectedBlogError, data: selectedBlog }] =
+    useGetOneBlogPostLazyQuery();
 
   const initialFormValues = useMemo(() => {
     if (selectedBlog) {
@@ -120,6 +91,7 @@ const EditBlogPost = () => {
         initialValues={initialFormValues}
         enableReinitialize={true}
         onSubmit={(values, errors) => {
+          //@ts-ignore
           editBlogPost({ variables: { blog: { ...values, id: params.id } } });
         }}
         validationSchema={Yup.object({

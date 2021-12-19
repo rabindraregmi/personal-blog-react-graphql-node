@@ -1,25 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
 import moment from "moment";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
 import TabModule from "../../components/TabModule/TabModule";
+import { useGetAllBlogsQuery } from "../../queries/autogenerate/hooks";
 
-export const GET_ALL_BLOGS = gql`
-  query GetAllBlogs {
-    getAllBlogPost {
-      id
-      title
-      subtitle
-      content
-      published
-      created_at
-      updated_at
-    }
-  }
-`;
 const BlogPostTable = () => {
-  const { loading, data } = useQuery(GET_ALL_BLOGS);
+  const { loading, data } = useGetAllBlogsQuery();
   const navigate = useNavigate();
 
   const tableHeaders = useMemo(
@@ -46,7 +33,7 @@ const BlogPostTable = () => {
 
   const tableData = useMemo(() => {
     if (data) {
-      return data.getAllBlogPost.map((blog: any) => {
+      return data.getAllBlogPost?.map((blog: any) => {
         return {
           ...blog,
           created_at: moment(Number(blog.created_at)).format("YYYY/MM/DD"),

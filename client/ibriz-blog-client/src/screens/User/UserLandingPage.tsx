@@ -1,20 +1,19 @@
-import { useQuery } from "@apollo/client";
 import { CircularProgress } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import BlogPostCard from "../../components/SingleBlogPost/BlogPostCard";
+import { useGetAllPublishedBlogsQuery } from "../../queries/autogenerate/hooks";
 import useCustomPagination from "../../utils/Pagination";
-import { GET_ALL_BLOGS } from "../Admin/BlogPostTable";
 import "./UserLandingPage.scss";
 
 const UserLandingPage = () => {
-  const { loading, error, data: blogs } = useQuery(GET_ALL_BLOGS);
+  const { loading, error, data: blogs } = useGetAllPublishedBlogsQuery();
   const pageSize = 5;
   const { paginate, pageIndex, goToNext, goToPrev, canNext, canPrev } =
     useCustomPagination({ pageSize });
 
   useEffect(() => {
-    if (blogs) {
-      paginate(blogs.getAllBlogPost.length);
+    if (blogs && blogs.getPublishedBlogPost) {
+      paginate(blogs.getPublishedBlogPost.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogs]);
@@ -41,7 +40,7 @@ const UserLandingPage = () => {
           </button>
         </div>
         <div className="blog-posts">
-          {blogs?.getAllBlogPost
+          {blogs?.getPublishedBlogPost
             ?.slice(pageIndex * pageSize, pageSize * (pageIndex + 1))
             .map((blog: any, index: any) => {
               return <BlogPostCard key={index} blog={blog} />;

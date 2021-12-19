@@ -10,24 +10,16 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { gql, useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
+import { useLoginLazyQuery } from "../../queries/autogenerate/hooks";
+import { CircularProgress } from "@material-ui/core";
 
 interface LoginFormPayload {
   email: string;
   password: string;
 }
 
-const LOGIN_USER = gql`
-  query Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      userId
-      token
-      tokenExpiration
-    }
-  }
-`;
-
 const LoginPage = () => {
-  const [loginUser, { data, loading, error }] = useLazyQuery(LOGIN_USER);
+  const [loginUser, { data, loading, error }] = useLoginLazyQuery();
   const navigate = useNavigate();
 
   const initialFormValues: LoginFormPayload = {
@@ -119,12 +111,16 @@ const LoginPage = () => {
                 </div>
               </div>
               <div className="login-button">
-                <Button
-                  label="Login"
-                  style={{ width: "100%", justifyContent: "center" }}
-                  handleClick={() => formik.handleSubmit()}
-                  type={"submit"}
-                />
+                {loading ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    label="Login"
+                    style={{ width: "100%", justifyContent: "center" }}
+                    handleClick={() => formik.handleSubmit()}
+                    type={"submit"}
+                  />
+                )}
               </div>
             </div>
           </div>

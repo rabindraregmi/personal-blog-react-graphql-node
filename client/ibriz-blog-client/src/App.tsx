@@ -1,13 +1,8 @@
-import './App.css';
-import AuthorizedRouting from './routes/routes';
+import "./App.css";
+import AuthorizedRouting from "./routes/routes";
 
-
-const  App=() => {
-
-
-  return (
-    <AuthorizedRouting />
-  );
-}
+const App = () => {
+  return <AuthorizedRouting />;
+};
 
 export default App;

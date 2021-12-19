@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 
 const BlogPostCard = ({ blog, size = "sm" }: any) => {
   return (
-    <div className="blog-post">
+    <div className={clsx("blog-post", size === "sm" ? "blog-post-sm" : "")}>
       {/* <div className="blog-thumb">
         <img src="" alt="" />
       </div> */}

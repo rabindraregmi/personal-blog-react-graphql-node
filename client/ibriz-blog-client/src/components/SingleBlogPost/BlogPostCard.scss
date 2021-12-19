@@ -30,11 +30,19 @@ h6 {
   width: 100%;
 }
 
+.blog-post-sm {
+  box-shadow: 1px 0px 7px 0px grey;
+  .down-content {
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+}
+
 .blog-posts .blog-post {
   margin-bottom: 30px;
   z-index: 10;
   /* border: 1px solid #00000021; */
-  box-shadow: 1px 0px 7px 0px grey;
 }
 
 .blog-posts .blog-thumb img {
@@ -44,9 +52,6 @@ h6 {
 
 .blog-posts .down-content {
   padding: 40px;
-  border-right: 1px solid #eee;
-  border-left: 1px solid #eee;
-  border-bottom: 1px solid #eee;
 }
 
 .blog-posts .down-content span {
@@ -56,11 +61,20 @@ h6 {
   color: #024869;
 }
 
-.blog-posts .down-content h4 {
-  font-size: 32px;
+.blog-posts .blog-post .down-content h4 {
+  font-size: 50px;
   text-transform: capitalize;
-  letter-spacing: 0.5px;
-  font-weight: 400;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #333;
+  margin: 10px 0px 12px 0px;
+}
+
+.blog-post-sm h4 {
+  font-size: 32px !important;
+  text-transform: capitalize;
+  letter-spacing: 0.5px !important;
+  font-weight: 400 !important;
   color: #333;
   margin: 10px 0px 12px 0px;
 }
@@ -110,7 +124,7 @@ p.content-summary {
   padding: 10px 0px;
   margin: 10px 0px;
 
-  text-align: justify;
+  text-align: left;
 }
 
 .blog-posts .down-content ul.post-share {
