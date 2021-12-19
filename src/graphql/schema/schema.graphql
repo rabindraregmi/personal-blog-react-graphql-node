@@ -79,10 +79,9 @@ type Query {
   getOneBlogPost(id: ID!): Blog
   getAllBlogPost(search: String): [Blog]
   getPublishedBlogPost: [Blog]
-
   getCategories: [Category]
-
   login(email: String!, password: String!): AuthData!
+  authorize(token: String!): Boolean
 }
 
 type Mutation {

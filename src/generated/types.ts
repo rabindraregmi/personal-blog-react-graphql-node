@@ -157,6 +157,7 @@ export type Query = {
   Profile?: Maybe<Profile>;
   User?: Maybe<User>;
   Users?: Maybe<Array<Maybe<User>>>;
+  authorize?: Maybe<Scalars['Boolean']>;
   getAllBlogPost?: Maybe<Array<Maybe<Blog>>>;
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getOneBlogPost?: Maybe<Blog>;
@@ -172,6 +173,11 @@ export type QueryProfileArgs = {
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryAuthorizeArgs = {
+  token: Scalars['String'];
 };
 
 
@@ -418,6 +424,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   Profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'id'>>;
   User?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   Users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  authorize?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryAuthorizeArgs, 'token'>>;
   getAllBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType, RequireFields<QueryGetAllBlogPostArgs, never>>;
   getCategories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
   getOneBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<QueryGetOneBlogPostArgs, 'id'>>;

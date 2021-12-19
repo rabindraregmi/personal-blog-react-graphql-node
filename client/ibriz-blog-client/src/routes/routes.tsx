@@ -1,60 +1,69 @@
-import { Route, Routes } from "react-router-dom";
+import { gql, useLazyQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import AdminDashboardHOC from "../hoc/AdminDashboard";
 import UserDashboardHOC from "../hoc/UserDashboard";
-import AddNewBlogs from "../screens/Admin/AddNewBlogs";
-import AdminPage from "../screens/Admin/AdminDashboardPage";
+import LoginPage from "../screens/Login/LoginPage";
 import NotFoundPage from "../screens/NotFoundPage/NotFoundPage";
 
 const AuthorizedRouting = () => {
-  // const access = useSelector(
-  //   (state: ReturnType<typeof rootReducer>) => state.access.access[0]
-  // );
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element = {<UserDashboardHOC/>}/>
-        <Route path="/admin/dashboard/*" element = {<AdminDashboardHOC/>}/>
-       
-            {/* <PrivateRoute path="/codashboard">
-            {Array.isArray(permissions) &&
-          permissions?.includes(RBAC_AUTH.CO_VIEW_ACCESS) ? (
-              <CODashboard />
-              ):(<span>Unauthorized!</span>)}
-            </PrivateRoute>
-          
-        <PrivateRoute path="/dashboard">
-          <Dashboard />
-        </PrivateRoute> */}
-        <Route path="*" element = {
-          <NotFoundPage />
-        }/>
+        <Route path="/*" element={<UserDashboardHOC />} />
+        <Route path="/admin/*" element={<LoginPage />} />
+
+        <Route
+          path="/admin/dashboard/*"
+          element={<PrivateRoute element={<AdminDashboardHOC />} />}
+        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-// //TODO add private routes
-// function PrivateRoute({ children, ...rest }:any) {
-//   const location:any = useLocation();
-//   const auth = useSelector((state: RootState) => state.loginReducer);
-//   const { from } = location.state || { from: { pathname: "/" } };
-//   return (
-//     <Route
-//       {...rest}
-//       render={({ location }) =>
-//         auth.isLoggedIn ? (
-//           children
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/",
-//               state: from?.pathname === 'profile' ? undefined :{ from: location}
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// }
+const AUTHORIZE_TOKEN = gql`
+  query AuthorizeToken($token: String!) {
+    authorize(token: $token)
+  }
+`;
+
+function PrivateRoute({ element }: any) {
+  const [authorize, { called, data, error, loading }] =
+    useLazyQuery(AUTHORIZE_TOKEN);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    authorize({ variables: { token: token || "" } });
+  }, [token]);
+
+  useEffect(() => {
+    if (error || (data && !data.authorize)) {
+      localStorage.removeItem("token");
+      setIsRedirect(true);
+    }
+  }, [data, error]);
+
+  return !called || loading ? (
+    <div>Loading....</div>
+  ) : !isRedirect ? (
+    element
+  ) : (
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <Navigate
+            to={{
+              pathname: "/admin",
+            }}
+          />
+        }
+      />
+    </Routes>
+  );
+}
 export default AuthorizedRouting;

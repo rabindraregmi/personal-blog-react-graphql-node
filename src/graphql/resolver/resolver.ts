@@ -1,8 +1,9 @@
-import { ValidationError } from "apollo-server";
+import { AuthenticationError, ValidationError } from "apollo-server";
 import { BlogModel, CategoryModel, UserModel } from "../../db/models";
 import { Resolvers } from "../../generated/types";
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
+import getUser from "../../auth";
 
 const resolvers: Resolvers = {
   Query: {
@@ -31,14 +32,21 @@ const resolvers: Resolvers = {
         tokenExpiration: 1,
       };
     },
+    authorize: async (_, { token }, context) => {
+      if (await getUser(token)) return true;
+      else return false;
+    },
     getCategories: async () => await CategoryModel.find(),
     //@ts-ignore
-    getAllBlogPost: async (_, args) =>
-      await BlogModel.find({
+    getAllBlogPost: async (_, args, context) => {
+      if (!context.user) throw new AuthenticationError("User not authorised");
+
+      return await BlogModel.find({
         title: { $regex: (args as any)?.search || "", $options: "i" },
       })
         .populate("category")
-        .sort({ created_at: "desc" }),
+        .sort({ created_at: "desc" });
+    },
     getOneBlogPost: async (_, { id }) => {
       try {
         const blog = await BlogModel.exists({ _id: id });

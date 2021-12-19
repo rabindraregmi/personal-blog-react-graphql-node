@@ -41,14 +41,8 @@ const AdminDashboardHOC = ({ children }: any) => {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<AdminPage />} />
-          <Route
-            path="/add_blog"
-            element={<AddNewBlogs />}
-          />
-          <Route
-            path="/edit_blog/:id"
-            element={<EditBlogPost />}
-          />
+          <Route path="/add_blog" element={<AddNewBlogs />} />
+          <Route path="/edit_blog/:id" element={<EditBlogPost />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
