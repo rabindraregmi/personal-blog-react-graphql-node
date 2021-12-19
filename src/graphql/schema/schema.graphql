@@ -58,6 +58,18 @@ input BlogInput {
   category: ID
 }
 
+input UserInput {
+  id: ID
+  email: String
+  password: String
+}
+
+type AuthData {
+  userId: ID!
+  token: String!
+  tokenExpiration: Int!
+}
+
 type Query {
   User(id: ID!): User
   Users: [User]
@@ -69,9 +81,15 @@ type Query {
   getPublishedBlogPost: [Blog]
 
   getCategories: [Category]
+
+  login(email: String!, password: String!): AuthData!
 }
 
 type Mutation {
+  createUser(user: UserInput!): User
+  editUser(user: UserInput!): User
+  deleteUser(id: ID!): User
+
   createCategory(category: CategoryInput!): Category
   editCategory(category: CategoryInput!): Category
   deleteCategory(id: ID!): Category

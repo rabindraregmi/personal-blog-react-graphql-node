@@ -39,6 +39,7 @@
     "@graphql-codegen/typescript": "^2.4.1",
     "@graphql-codegen/typescript-mongodb": "^2.2.1",
     "@graphql-codegen/typescript-resolvers": "^2.4.2",
+    "@types/bcryptjs": "^2.4.2",
     "@types/mongoose": "^5.11.97"
   }
 }

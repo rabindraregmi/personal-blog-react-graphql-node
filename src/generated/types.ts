@@ -20,6 +20,13 @@ export type AdditionalEntityFields = {
   type?: InputMaybe<Scalars['String']>;
 };
 
+export type AuthData = {
+  __typename?: 'AuthData';
+  token: Scalars['String'];
+  tokenExpiration: Scalars['Int'];
+  userId: Scalars['ID'];
+};
+
 export type Blog = {
   __typename?: 'Blog';
   category: Category;
@@ -59,11 +66,14 @@ export type Mutation = {
   createBlogPost?: Maybe<Blog>;
   createCategory?: Maybe<Category>;
   createProfile?: Maybe<Profile>;
+  createUser?: Maybe<User>;
   deleteBlogPost?: Maybe<Blog>;
   deleteCategory?: Maybe<Category>;
+  deleteUser?: Maybe<User>;
   editBlogPost?: Maybe<Blog>;
   editCategory?: Maybe<Category>;
   editProfile?: Maybe<Profile>;
+  editUser?: Maybe<User>;
 };
 
 
@@ -82,12 +92,22 @@ export type MutationCreateProfileArgs = {
 };
 
 
+export type MutationCreateUserArgs = {
+  user: UserInput;
+};
+
+
 export type MutationDeleteBlogPostArgs = {
   id: Scalars['ID'];
 };
 
 
 export type MutationDeleteCategoryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteUserArgs = {
   id: Scalars['ID'];
 };
 
@@ -104,6 +124,11 @@ export type MutationEditCategoryArgs = {
 
 export type MutationEditProfileArgs = {
   profile?: InputMaybe<ProfileInput>;
+};
+
+
+export type MutationEditUserArgs = {
+  user: UserInput;
 };
 
 export type Profile = {
@@ -136,6 +161,7 @@ export type Query = {
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getOneBlogPost?: Maybe<Blog>;
   getPublishedBlogPost?: Maybe<Array<Maybe<Blog>>>;
+  login: AuthData;
 };
 
 
@@ -149,8 +175,19 @@ export type QueryUserArgs = {
 };
 
 
+export type QueryGetAllBlogPostArgs = {
+  search?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryGetOneBlogPostArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type User = {
@@ -158,6 +195,12 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['ID'];
   password: Scalars['String'];
+};
+
+export type UserInput = {
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  password?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -231,8 +274,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Blog: ResolverTypeWrapper<Blog>;
+  AuthData: ResolverTypeWrapper<AuthData>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Blog: ResolverTypeWrapper<Blog>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   BlogInput: BlogInput;
   Category: ResolverTypeWrapper<Category>;
@@ -243,14 +288,17 @@ export type ResolversTypes = {
   ProfileInput: ProfileInput;
   Query: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
+  UserInput: UserInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: Scalars['String'];
-  Blog: Blog;
+  AuthData: AuthData;
+  Int: Scalars['Int'];
   ID: Scalars['ID'];
+  Blog: Blog;
   Boolean: Scalars['Boolean'];
   BlogInput: BlogInput;
   Category: Category;
@@ -261,6 +309,7 @@ export type ResolversParentTypes = {
   ProfileInput: ProfileInput;
   Query: {};
   User: User;
+  UserInput: UserInput;
 };
 
 export type UnionDirectiveArgs = {
@@ -310,6 +359,13 @@ export type MapDirectiveArgs = {
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type AuthDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthData'] = ResolversParentTypes['AuthData']> = {
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tokenExpiration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type BlogResolvers<ContextType = any, ParentType extends ResolversParentTypes['Blog'] = ResolversParentTypes['Blog']> = {
   category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -337,11 +393,14 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<MutationCreateBlogPostArgs, 'blog'>>;
   createCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationCreateCategoryArgs, 'category'>>;
   createProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<MutationCreateProfileArgs, never>>;
+  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   deleteBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<MutationDeleteBlogPostArgs, 'id'>>;
   deleteCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationDeleteCategoryArgs, 'id'>>;
+  deleteUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   editBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<MutationEditBlogPostArgs, 'blog'>>;
   editCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationEditCategoryArgs, 'category'>>;
   editProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<MutationEditProfileArgs, never>>;
+  editUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationEditUserArgs, 'user'>>;
 };
 
 export type ProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['Profile'] = ResolversParentTypes['Profile']> = {
@@ -359,10 +418,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   Profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'id'>>;
   User?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   Users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  getAllBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType>;
+  getAllBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType, RequireFields<QueryGetAllBlogPostArgs, never>>;
   getCategories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
   getOneBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<QueryGetOneBlogPostArgs, 'id'>>;
   getPublishedBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType>;
+  login?: Resolver<ResolversTypes['AuthData'], ParentType, ContextType, RequireFields<QueryLoginArgs, 'email' | 'password'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -373,6 +433,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
+  AuthData?: AuthDataResolvers<ContextType>;
   Blog?: BlogResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
   Date?: GraphQLScalarType;

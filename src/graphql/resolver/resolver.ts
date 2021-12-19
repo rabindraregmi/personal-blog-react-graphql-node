@@ -1,9 +1,36 @@
 import { ValidationError } from "apollo-server";
-import { BlogModel, CategoryModel } from "../../db/models";
+import { BlogModel, CategoryModel, UserModel } from "../../db/models";
 import { Resolvers } from "../../generated/types";
+import bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
 
 const resolvers: Resolvers = {
   Query: {
+    login: async (_, { email, password }) => {
+      const user = await UserModel.findOne({ email }).select("+password");
+      if (!user) {
+        throw new Error("User does not exist");
+      }
+      const valid = await bcrypt.compare(password, String(user.password));
+      if (!valid) {
+        throw new Error("Incorrect password");
+      }
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          user_name: user.user_name,
+        },
+        "SECRET_KEY_HERE",
+        {
+          expiresIn: "1h",
+        }
+      );
+      return {
+        userId: user.id,
+        token,
+        tokenExpiration: 1,
+      };
+    },
     getCategories: async () => await CategoryModel.find(),
     //@ts-ignore
     getAllBlogPost: async (_, args) =>
@@ -24,6 +51,34 @@ const resolvers: Resolvers = {
     },
   },
   Mutation: {
+    createUser: async (_, { user }) => {
+      const found = await UserModel.findOne({ email: user.email });
+      if (found) {
+        throw new Error("User exists already.");
+      }
+      const hashedPassword = await bcrypt.hash(user.password as string, 12);
+      const newUser = new UserModel({
+        email: user.email,
+        password: hashedPassword,
+      });
+      return await newUser.save();
+    },
+
+    editUser: async (_, { user }) => {
+      //@ts-ignore
+      const updateUser = await UserModel.findByIdAndUpdate(
+        user?.id,
+        { $set: { ...user } },
+        { new: true }
+      );
+
+      return updateUser;
+    },
+    deleteUser: async (_, { id }) => {
+      const deletedUser = await UserModel.findByIdAndDelete(id);
+      return deletedUser;
+    },
+
     createCategory: async (_, { category }) => {
       try {
         const newCategory = new CategoryModel({
