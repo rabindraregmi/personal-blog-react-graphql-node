@@ -29,7 +29,7 @@ export type AuthData = {
 
 export type Blog = {
   __typename?: 'Blog';
-  category: Category;
+  category?: Maybe<Category>;
   content?: Maybe<Scalars['String']>;
   created_at: Scalars['Date'];
   id: Scalars['ID'];
@@ -188,6 +188,11 @@ export type QueryGetAllBlogPostArgs = {
 
 export type QueryGetOneBlogPostArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryGetPublishedBlogPostArgs = {
+  search?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -373,7 +378,7 @@ export type AuthDataResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type BlogResolvers<ContextType = any, ParentType extends ResolversParentTypes['Blog'] = ResolversParentTypes['Blog']> = {
-  category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -428,7 +433,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getAllBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType, RequireFields<QueryGetAllBlogPostArgs, never>>;
   getCategories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
   getOneBlogPost?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<QueryGetOneBlogPostArgs, 'id'>>;
-  getPublishedBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType>;
+  getPublishedBlogPost?: Resolver<Maybe<Array<Maybe<ResolversTypes['Blog']>>>, ParentType, ContextType, RequireFields<QueryGetPublishedBlogPostArgs, never>>;
   login?: Resolver<ResolversTypes['AuthData'], ParentType, ContextType, RequireFields<QueryLoginArgs, 'email' | 'password'>>;
 };
 

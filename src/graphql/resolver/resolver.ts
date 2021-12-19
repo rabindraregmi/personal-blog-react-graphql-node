@@ -47,6 +47,12 @@ const resolvers: Resolvers = {
         .populate("category")
         .sort({ created_at: "desc" });
     },
+    getPublishedBlogPost: async (_, args) => {
+      return await BlogModel.find({
+        published: true,
+        title: { $regex: (args as any)?.search || "", $options: "i" },
+      }).populate("category");
+    },
     getOneBlogPost: async (_, { id }) => {
       try {
         const blog = await BlogModel.exists({ _id: id });
