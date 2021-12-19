@@ -38,7 +38,7 @@ const AdminDashboardHOC = ({ children }: any) => {
     <div className="container-fluid">
       <Navbar />
       <Sidebar routes={sideBarRoutes} />
-      <div className="main-content">
+      <div className="main-content main-admin-content">
         <Routes>
           <Route path="/" element={<AdminPage />} />
           <Route path="/add_blog" element={<AddNewBlogs />} />

@@ -8,7 +8,6 @@ import { ErrorMessage, Formik } from "formik";
 
 import * as Yup from "yup";
 import clsx from "clsx";
-import { gql, useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useLoginLazyQuery } from "../../queries/autogenerate/hooks";
 import { CircularProgress } from "@material-ui/core";

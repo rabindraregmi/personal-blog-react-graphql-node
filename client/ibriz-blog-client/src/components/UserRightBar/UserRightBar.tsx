@@ -1,11 +1,9 @@
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { CircularProgress } from "@material-ui/core";
 import _ from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  useGetAllPublishedBlogsQuery,
   useGetCategoriesQuery,
   useGetFilteredPublicBlogPostLazyQuery,
 } from "../../queries/autogenerate/hooks";
@@ -49,6 +47,7 @@ const RecentPostSection = () => {
 
   useEffect(() => {
     getFilteredBlogs({ variables: { search: searchInput } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput]);
 
   //delays the api call otherwise api will be hit on each keystroke

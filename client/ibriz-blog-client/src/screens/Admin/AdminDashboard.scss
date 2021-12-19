@@ -2,14 +2,21 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 260px);
   right: 0px;
   top: 66px;
   bottom: 0px;
-  left: 260px;
   max-width: 100%;
   transition: all 0.2s ease-out 0.1s;
   padding: 20px;
+}
+
+.main-user-content {
+  left: 300px;
+  width: calc(100% - 300px);
+}
+.main-admin-content {
+  left: 260px;
+  width: calc(100% - 260px);
 }
 
 .form-container {
