@@ -1,4 +1,4 @@
-import { AuthenticationError, ValidationError } from "apollo-server";
+import { AuthenticationError, ValidationError } from "apollo-server-express";
 import { BlogModel, CategoryModel, UserModel } from "../../db/models";
 import { Resolvers } from "../../generated/types";
 import bcrypt from "bcryptjs";
@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
           userId: user.id,
           user_name: user.user_name,
         },
-        "SECRET_KEY_HERE",
+        process.env.SECRET_KEY || "SECRET_KEY",
         {
           expiresIn: "1h",
         }
