@@ -30,6 +30,13 @@ mutation EditBlogPost($blog: BlogInput!) {
   }
 }
 
+mutation DeleteBlogPost($id: ID!) {
+  deleteBlogPost(id: $id) {
+    title
+    subtitle
+  }
+}
+
 query GetAllBlogs {
   getAllBlogPost {
     id

@@ -29,6 +29,7 @@ const AddNewBlogs = () => {
     subtitle: "",
     content: "",
     category: "",
+    published: false,
   };
 
   useEffect(() => {
@@ -163,8 +164,10 @@ export const BlogForm = ({ formik, loading }: any) => {
             <input
               className="form-check-input"
               type="checkbox"
-              id="flexSwitchCheckChecked"
               name="published"
+              checked={formik.values.published === true}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
             <label
               className="form-check-label"

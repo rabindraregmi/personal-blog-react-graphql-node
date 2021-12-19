@@ -34,6 +34,7 @@ const EditBlogPost = () => {
         subtitle: blog?.subtitle || "",
         content: blog?.content || "",
         category: blog?.category || "",
+        published: blog?.published,
       };
     } else {
       return {
@@ -41,6 +42,7 @@ const EditBlogPost = () => {
         subtitle: "",
         content: "",
         category: "",
+        published: false,
       };
     }
   }, [selectedBlog]);

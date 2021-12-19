@@ -119,6 +119,40 @@ export function useEditBlogPostMutation(baseOptions?: Apollo.MutationHookOptions
 export type EditBlogPostMutationHookResult = ReturnType<typeof useEditBlogPostMutation>;
 export type EditBlogPostMutationResult = Apollo.MutationResult<Types.EditBlogPostMutation>;
 export type EditBlogPostMutationOptions = Apollo.BaseMutationOptions<Types.EditBlogPostMutation, Types.EditBlogPostMutationVariables>;
+export const DeleteBlogPostDocument = gql`
+    mutation DeleteBlogPost($id: ID!) {
+  deleteBlogPost(id: $id) {
+    title
+    subtitle
+  }
+}
+    `;
+export type DeleteBlogPostMutationFn = Apollo.MutationFunction<Types.DeleteBlogPostMutation, Types.DeleteBlogPostMutationVariables>;
+
+/**
+ * __useDeleteBlogPostMutation__
+ *
+ * To run a mutation, you first call `useDeleteBlogPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBlogPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBlogPostMutation, { data, loading, error }] = useDeleteBlogPostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteBlogPostMutation(baseOptions?: Apollo.MutationHookOptions<Types.DeleteBlogPostMutation, Types.DeleteBlogPostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.DeleteBlogPostMutation, Types.DeleteBlogPostMutationVariables>(DeleteBlogPostDocument, options);
+      }
+export type DeleteBlogPostMutationHookResult = ReturnType<typeof useDeleteBlogPostMutation>;
+export type DeleteBlogPostMutationResult = Apollo.MutationResult<Types.DeleteBlogPostMutation>;
+export type DeleteBlogPostMutationOptions = Apollo.BaseMutationOptions<Types.DeleteBlogPostMutation, Types.DeleteBlogPostMutationVariables>;
 export const GetAllBlogsDocument = gql`
     query GetAllBlogs {
   getAllBlogPost {

@@ -38,4 +38,21 @@
     margin-top: 10px;
     padding: 10px;
   }
+  .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.modal-form-body {
+  .button-section {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    align-items: flex-end;
+    justify-content: flex-end;
+    button {
+      margin-right: 10px;
+    }
+  }
 }

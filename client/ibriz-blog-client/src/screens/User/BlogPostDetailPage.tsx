@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackBar } from "../../context/SnackbarContext";
 import BlogPostCard from "../../components/SingleBlogPost/BlogPostCard";
 import { useGetOneBlogPostLazyQuery } from "../../queries/autogenerate/hooks";
+import { ArrowLeft32 } from "@carbon/icons-react";
 
 const BlogPostDetailPage = () => {
   const navigate = useNavigate();
@@ -31,6 +32,12 @@ const BlogPostDetailPage = () => {
   }, [selectedBlogError]);
   return (
     <div className="blog-detail-page blog-posts">
+      <div className="left-arrow">
+        <ArrowLeft32
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate(-1)}
+        />
+      </div>
       <BlogPostCard blog={blog?.getOneBlogPost} size="lg" />
     </div>
   );

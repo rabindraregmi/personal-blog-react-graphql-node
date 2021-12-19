@@ -21,6 +21,13 @@ export type EditBlogPostMutationVariables = Types.Exact<{
 
 export type EditBlogPostMutation = { __typename?: 'Mutation', editBlogPost?: { __typename?: 'Blog', title: string, subtitle?: string | null | undefined, content?: string | null | undefined, published?: boolean | null | undefined } | null | undefined };
 
+export type DeleteBlogPostMutationVariables = Types.Exact<{
+  id: Types.Scalars['ID'];
+}>;
+
+
+export type DeleteBlogPostMutation = { __typename?: 'Mutation', deleteBlogPost?: { __typename?: 'Blog', title: string, subtitle?: string | null | undefined } | null | undefined };
+
 export type GetAllBlogsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
