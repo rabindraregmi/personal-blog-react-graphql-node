@@ -10,7 +10,7 @@ const getUser = async (authToken) => {
     if (!authHeader) {
         return null;
     }
-    const token = authHeader; // Bearer token_here
+    const token = authHeader;
     if (!token || token === "") {
         return null;
     }
