@@ -1,0 +1,106 @@
+scalar Date
+
+type SocialProfile {
+  github: String
+  instagram: String
+  twitter: String
+  linkedin: String
+}
+type Profile {
+  full_name: String!
+  mobile_number: String
+  address: String
+  intro: String
+  social: SocialProfile
+}
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  profile: Profile
+}
+type Category {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Blog {
+  id: ID!
+  title: String!
+  subtitle: String
+  content: String
+  published: Boolean
+  category: Category
+  created_at: Date!
+  updated_at: Date!
+}
+
+input CategoryInput {
+  id: ID
+  name: String
+  description: String
+}
+input BlogInput {
+  id: ID
+  title: String
+  subtitle: String
+  content: String
+  published: Boolean
+  category: ID
+}
+
+input SocialProfileInput {
+  github: String
+  instagram: String
+  twitter: String
+  linkedin: String
+}
+input ProfileInput {
+  full_name: String
+  mobile_number: String
+  phone_number: String
+  address: String
+  intro: String
+  social: SocialProfileInput
+}
+
+input UserInput {
+  id: ID
+  email: String
+  password: String
+  profile: ProfileInput
+}
+
+type AuthData {
+  userId: ID!
+  token: String!
+  tokenExpiration: Int!
+}
+
+type Query {
+  User(id: ID!): User
+  Users: [User]
+  getOneBlogPost(id: ID!): Blog
+  getAllBlogPost(search: String): [Blog]
+  getPublishedBlogPost(search: String): [Blog]
+  getCategories: [Category]
+  login(email: String!, password: String!): AuthData!
+  authorize(token: String!): Boolean
+  getUserProfile: [User]
+}
+
+type Mutation {
+  createUser(user: UserInput!): User
+  editUser(user: UserInput!): User
+  deleteUser(id: ID!): User
+
+  createCategory(category: CategoryInput!): Category
+  editCategory(category: CategoryInput!): Category
+  deleteCategory(id: ID!): Category
+
+  createBlogPost(blog: BlogInput!): Blog
+  editBlogPost(blog: BlogInput!): Blog
+
+  deleteBlogPost(id: ID!): Blog
+}
