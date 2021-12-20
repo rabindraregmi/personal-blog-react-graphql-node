@@ -33,12 +33,14 @@ async function startApolloServer(typeDefs: any, resolvers: any) {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+
     context: async ({ req }) => {
       const user = await getUser(req.headers.authorization || "");
       return {
         user,
       };
     },
+    introspection: true,
   });
 
   await server.start();

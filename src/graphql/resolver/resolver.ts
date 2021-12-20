@@ -47,6 +47,7 @@ const resolvers: Resolvers = {
 
       return await BlogModel.find({
         title: { $regex: (args as any)?.search || "", $options: "i" },
+        ...args.query,
       })
         .populate("category")
         .sort({ created_at: "desc" });
@@ -55,7 +56,9 @@ const resolvers: Resolvers = {
       return await BlogModel.find({
         published: true,
         title: { $regex: (args as any)?.search || "", $options: "i" },
-      }).populate("category");
+      })
+        .populate("category")
+        .sort({ created_at: "desc" });
     },
     getOneBlogPost: async (_, { id }) => {
       try {
@@ -88,7 +91,7 @@ const resolvers: Resolvers = {
       if (!context.user) throw new AuthenticationError("User not authorised");
       //@ts-ignore
       const updateUser = await UserModel.findByIdAndUpdate(
-        user?.id,
+        context?.user?.id,
         { $set: { ...user } },
         { new: true }
       );

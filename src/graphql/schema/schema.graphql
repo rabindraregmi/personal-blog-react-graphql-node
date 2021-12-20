@@ -82,7 +82,7 @@ type Query {
   User(id: ID!): User
   Users: [User]
   getOneBlogPost(id: ID!): Blog
-  getAllBlogPost(search: String): [Blog]
+  getAllBlogPost(search: String, query: BlogInput): [Blog]
   getPublishedBlogPost(search: String): [Blog]
   getCategories: [Category]
   login(email: String!, password: String!): AuthData!
