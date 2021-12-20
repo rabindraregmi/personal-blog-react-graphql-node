@@ -275,12 +275,14 @@ export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQue
 export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
 export type GetCategoriesQueryResult = Apollo.QueryResult<Types.GetCategoriesQuery, Types.GetCategoriesQueryVariables>;
 export const GetFilteredBlogPostDocument = gql`
-    query GetFilteredBlogPost($search: String) {
-  getAllBlogPost(search: $search) {
+    query GetFilteredBlogPost($search: String, $query: BlogInput) {
+  getAllBlogPost(search: $search, query: $query) {
     title
+    subtitle
+    content
+    published
     created_at
     id
-    content
   }
 }
     `;
@@ -298,6 +300,7 @@ export const GetFilteredBlogPostDocument = gql`
  * const { data, loading, error } = useGetFilteredBlogPostQuery({
  *   variables: {
  *      search: // value for 'search'
+ *      query: // value for 'query'
  *   },
  * });
  */
@@ -466,3 +469,45 @@ export function useGetUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetUserProfileQueryHookResult = ReturnType<typeof useGetUserProfileQuery>;
 export type GetUserProfileLazyQueryHookResult = ReturnType<typeof useGetUserProfileLazyQuery>;
 export type GetUserProfileQueryResult = Apollo.QueryResult<Types.GetUserProfileQuery, Types.GetUserProfileQueryVariables>;
+export const EditUserProfileDocument = gql`
+    mutation EditUserProfile($user: UserInput!) {
+  editUser(user: $user) {
+    email
+    profile {
+      full_name
+      mobile_number
+      address
+      intro
+      social {
+        github
+      }
+    }
+  }
+}
+    `;
+export type EditUserProfileMutationFn = Apollo.MutationFunction<Types.EditUserProfileMutation, Types.EditUserProfileMutationVariables>;
+
+/**
+ * __useEditUserProfileMutation__
+ *
+ * To run a mutation, you first call `useEditUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editUserProfileMutation, { data, loading, error }] = useEditUserProfileMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useEditUserProfileMutation(baseOptions?: Apollo.MutationHookOptions<Types.EditUserProfileMutation, Types.EditUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.EditUserProfileMutation, Types.EditUserProfileMutationVariables>(EditUserProfileDocument, options);
+      }
+export type EditUserProfileMutationHookResult = ReturnType<typeof useEditUserProfileMutation>;
+export type EditUserProfileMutationResult = Apollo.MutationResult<Types.EditUserProfileMutation>;
+export type EditUserProfileMutationOptions = Apollo.BaseMutationOptions<Types.EditUserProfileMutation, Types.EditUserProfileMutationVariables>;

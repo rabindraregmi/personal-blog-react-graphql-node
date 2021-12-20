@@ -151,6 +151,14 @@ td {
   align-items: stretch;
   width: 100%;
   overflow-x: auto;
+  position: relative;
+
+  .loader-section {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    z-index: 1000;
+  }
 }
 
 thead tr {

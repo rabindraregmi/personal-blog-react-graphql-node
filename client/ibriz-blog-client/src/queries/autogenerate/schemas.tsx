@@ -155,6 +155,7 @@ export type QueryAuthorizeArgs = {
 
 
 export type QueryGetAllBlogPostArgs = {
+  query?: InputMaybe<BlogInput>;
   search?: InputMaybe<Scalars['String']>;
 };
 

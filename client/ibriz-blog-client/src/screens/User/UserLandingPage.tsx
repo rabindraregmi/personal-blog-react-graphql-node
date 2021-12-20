@@ -1,6 +1,7 @@
 import { CircularProgress } from "@material-ui/core";
 import { useEffect } from "react";
 import BlogPostCard from "../../components/SingleBlogPost/BlogPostCard";
+import UserRightBar from "../../components/UserRightBar/UserRightBar";
 import { useGetAllPublishedBlogsQuery } from "../../queries/autogenerate/hooks";
 import useCustomPagination from "../../utils/Pagination";
 import "./UserLandingPage.scss";
@@ -21,30 +22,37 @@ const UserLandingPage = () => {
     <CircularProgress></CircularProgress>
   ) : (
     <>
-      <div className="user-landing-page d-flex flex-column align-content-flex-end">
-        <div className="pagination">
-          <button
-            className="btn shadow-none"
-            onClick={() => goToPrev()}
-            disabled={!canPrev}
-          >
-            Newer
-          </button>
-          &nbsp;
-          <button
-            className="btn shadow-none"
-            onClick={() => goToNext()}
-            disabled={!canNext}
-          >
-            Older
-          </button>
+      <div className="row">
+        <div className="col-sm-7">
+          <div className="user-landing-page d-flex flex-column align-content-flex-end">
+            <div className="pagination">
+              <button
+                className="btn shadow-none"
+                onClick={() => goToPrev()}
+                disabled={!canPrev}
+              >
+                Newer
+              </button>
+              &nbsp;
+              <button
+                className="btn shadow-none"
+                onClick={() => goToNext()}
+                disabled={!canNext}
+              >
+                Older
+              </button>
+            </div>
+            <div className="blog-posts">
+              {blogs?.getPublishedBlogPost
+                ?.slice(pageIndex * pageSize, pageSize * (pageIndex + 1))
+                .map((blog: any, index: any) => {
+                  return <BlogPostCard key={index} blog={blog} />;
+                })}
+            </div>
+          </div>
         </div>
-        <div className="blog-posts">
-          {blogs?.getPublishedBlogPost
-            ?.slice(pageIndex * pageSize, pageSize * (pageIndex + 1))
-            .map((blog: any, index: any) => {
-              return <BlogPostCard key={index} blog={blog} />;
-            })}
+        <div className="col-sm-4">
+          <UserRightBar />
         </div>
       </div>
     </>

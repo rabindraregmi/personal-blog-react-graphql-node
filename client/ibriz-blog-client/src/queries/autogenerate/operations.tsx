@@ -45,10 +45,11 @@ export type GetCategoriesQuery = { __typename?: 'Query', getCategories?: Array<{
 
 export type GetFilteredBlogPostQueryVariables = Types.Exact<{
   search?: Types.InputMaybe<Types.Scalars['String']>;
+  query?: Types.InputMaybe<Types.BlogInput>;
 }>;
 
 
-export type GetFilteredBlogPostQuery = { __typename?: 'Query', getAllBlogPost?: Array<{ __typename?: 'Blog', title: string, created_at: any, id: string, content?: string | null | undefined } | null | undefined> | null | undefined };
+export type GetFilteredBlogPostQuery = { __typename?: 'Query', getAllBlogPost?: Array<{ __typename?: 'Blog', title: string, subtitle?: string | null | undefined, content?: string | null | undefined, published?: boolean | null | undefined, created_at: any, id: string } | null | undefined> | null | undefined };
 
 export type GetFilteredPublicBlogPostQueryVariables = Types.Exact<{
   search?: Types.InputMaybe<Types.Scalars['String']>;
@@ -76,3 +77,10 @@ export type GetUserProfileQueryVariables = Types.Exact<{ [key: string]: never; }
 
 
 export type GetUserProfileQuery = { __typename?: 'Query', getUserProfile?: Array<{ __typename?: 'User', email: string, profile?: { __typename?: 'Profile', full_name: string, mobile_number?: string | null | undefined, address?: string | null | undefined, intro?: string | null | undefined, social?: { __typename?: 'SocialProfile', github?: string | null | undefined, instagram?: string | null | undefined, twitter?: string | null | undefined, linkedin?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+
+export type EditUserProfileMutationVariables = Types.Exact<{
+  user: Types.UserInput;
+}>;
+
+
+export type EditUserProfileMutation = { __typename?: 'Mutation', editUser?: { __typename?: 'User', email: string, profile?: { __typename?: 'Profile', full_name: string, mobile_number?: string | null | undefined, address?: string | null | undefined, intro?: string | null | undefined, social?: { __typename?: 'SocialProfile', github?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };

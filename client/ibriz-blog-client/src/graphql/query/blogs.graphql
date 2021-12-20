@@ -73,12 +73,14 @@ query GetCategories {
   }
 }
 
-query GetFilteredBlogPost($search: String) {
-  getAllBlogPost(search: $search) {
+query GetFilteredBlogPost($search: String, $query: BlogInput) {
+  getAllBlogPost(search: $search, query: $query) {
     title
+    subtitle
+    content
+    published
     created_at
     id
-    content
   }
 }
 query GetFilteredPublicBlogPost($search: String) {

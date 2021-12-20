@@ -1,15 +1,11 @@
 //color palatte
 $blue: #0394c7;
-$orange_dark: #d9480f, 90%;
-$orange: #f76707;
+$brand-color: #024869;
 
 //new color palatte
 $brand-emp-base: #0394c7;
 $brand-emp-light: #81cae3;
 $brand-emp-dark: #024869;
-$brand-co-base: #f76707;
-$brand-co-light: rgba(217, 72, 15, 0.9);
-$brand-co-dark: #d9480f;
 
 $black: #212529;
 $gray8: #343a40;
@@ -80,7 +76,3 @@ $table-emp-row-hover: rgba(3, 148, 199, 0.2);
 $table-co-row-hover: rgba(219, 88, 37, 0.2);
 $table-emp-row-selected: rgba(3, 148, 199, 0.4);
 $table-co-row-selected: rgba(219, 88, 37, 0.4);
-
-:export {
-  tableCoRowHover: $table-co-row-hover;
-}

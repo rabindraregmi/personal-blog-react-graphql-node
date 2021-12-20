@@ -26,3 +26,18 @@ query GetUserProfile {
     }
   }
 }
+
+mutation EditUserProfile($user: UserInput!) {
+  editUser(user: $user) {
+    email
+    profile {
+      full_name
+      mobile_number
+      address
+      intro
+      social {
+        github
+      }
+    }
+  }
+}

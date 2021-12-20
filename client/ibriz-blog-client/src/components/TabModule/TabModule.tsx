@@ -52,11 +52,11 @@ const TabModule = (props: TabModuleProps) => {
         {props.children.map((child: any) => {
           let tb = tabMapping[child.props.componentName];
           tb = tb && Array.isArray(tb) ? tb[0] : undefined;
-          if (selectedTab === tb) {
-            return child;
-          } else {
-            return <></>;
-          }
+          // if (selectedTab === tb) {
+          return child;
+          // } else {
+          //   return <></>;
+          // }
         })}
       </div>
     </>

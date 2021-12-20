@@ -10,7 +10,7 @@ const BlogPostCard = ({ blog, size = "sm" }: any) => {
   return (
     <div className={clsx("blog-post", size === "sm" ? "blog-post-sm" : "")}>
       {/* <div className="blog-thumb">
-        <img src="" alt="" />
+        <img src="../../assets/image/bg.jpg" alt="" />
       </div> */}
       <div className="down-content">
         {size === "sm" ? (

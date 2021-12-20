@@ -1,52 +1,43 @@
-import './Navbar.scss'
+import {
+  ArrowsHorizontal24,
+  Logout20,
+  Logout24,
+  Logout32,
+  Rotate20,
+  Switcher20,
+} from "@carbon/icons-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./Navbar.scss";
 
-// interface NavbarComponents {
-//   toggle: Function;
-//   navs: Array<NavbarProps>;
-//   themeColor?: string;
-//   avatarColor?: string;
-// }
+const Navbar = () => {
+  const navigate = useNavigate();
 
-export interface NavbarProps {
-  name: string;
-  renderIcon: Function;
-}
-
-const Navbar = ({
-  toggle,
-  navs,
-  themeColor,
-  avatarColor,
-}:any) => {
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/admin");
+  };
   return (
     <>
-      <nav
-        className="navbar navbar-expand"
-      >
-        <div className="navbar-brand">
-          {/* <img className="logo" src={logo} alt="logo" /> */}
-        </div>
-        <div className="navbar-collapse collapse">
-          <ul className="nav navbar-nav navbar-right">
-            <li>Home</li>
-            {/* {navs.map((nav:any) => (
-              <li
-                key={nav.name}
-                className="action"
-                onClick={() => toggle(nav.name)}
-              >
-                {nav.renderIcon()}
-              </li>
-            ))} */}
-            
-          </ul>
-        </div>
-      </nav>
+      <header>
+        <nav className="navbar navbar-expand-lg">
+          <div className="container">
+            <div className="collapse navbar-collapse" id="navbarResponsive">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/">
+                    Switch to User View
+                  </NavLink>
+                </li>
+                <li className="nav-item" onClick={() => handleLogout()}>
+                  <span className="nav-link">Logout</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
     </>
   );
 };
 
 export default Navbar;
-
-
