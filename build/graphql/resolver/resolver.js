@@ -66,9 +66,7 @@ const resolvers = {
             var _a;
             if (!context.user)
                 throw new apollo_server_express_1.AuthenticationError("User not authorised");
-            return await models_1.BlogModel.find({
-                title: { $regex: ((_a = args) === null || _a === void 0 ? void 0 : _a.search) || "", $options: "i" },
-            })
+            return await models_1.BlogModel.find(Object.assign({ title: { $regex: ((_a = args) === null || _a === void 0 ? void 0 : _a.search) || "", $options: "i" } }, args.query))
                 .populate("category")
                 .sort({ created_at: "desc" });
         },
@@ -77,7 +75,9 @@ const resolvers = {
             return await models_1.BlogModel.find({
                 published: true,
                 title: { $regex: ((_a = args) === null || _a === void 0 ? void 0 : _a.search) || "", $options: "i" },
-            }).populate("category");
+            })
+                .populate("category")
+                .sort({ created_at: "desc" });
         },
         getOneBlogPost: async (_, { id }) => {
             try {
@@ -104,10 +104,11 @@ const resolvers = {
             return await newUser.save();
         },
         editUser: async (_, { user }, context) => {
+            var _a;
             if (!context.user)
                 throw new apollo_server_express_1.AuthenticationError("User not authorised");
             //@ts-ignore
-            const updateUser = await models_1.UserModel.findByIdAndUpdate(user === null || user === void 0 ? void 0 : user.id, { $set: Object.assign({}, user) }, { new: true });
+            const updateUser = await models_1.UserModel.findByIdAndUpdate((_a = context === null || context === void 0 ? void 0 : context.user) === null || _a === void 0 ? void 0 : _a.id, { $set: Object.assign({}, user) }, { new: true });
             return updateUser;
         },
         deleteUser: async (_, { id }, context) => {

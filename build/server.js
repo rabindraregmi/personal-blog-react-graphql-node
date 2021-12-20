@@ -37,6 +37,7 @@ async function startApolloServer(typeDefs, resolvers) {
                 user,
             };
         },
+        introspection: true,
     });
     await server.start();
     server.applyMiddleware({
