@@ -185,11 +185,11 @@ const UserLeftBar = ({ viewAsAdmin = false }: UserLeftBarProps) => {
                   </div>
                   <div className="user-link">
                     <LogoTwitter16 /> &nbsp;
-                    <span>Twitter</span>
+                    <span>{userProfile?.profile?.social?.twitter}</span>
                   </div>
                   <div className="user-link">
                     <LogoInstagram16 /> &nbsp;
-                    <span>Instagram</span>
+                    <span>{userProfile?.profile?.social?.instagram}</span>
                   </div>
                 </section>
               </>
