@@ -15,9 +15,11 @@ Frontend
 
 ReactJS is used for frontend and Apollo Client is used for API Query and state management.
 
-To run the frontend
+To run the frontend, from main repository:
 
 ```
+cd client/
+cd ibriz-blog-client/
 npm install
 npm run start
 
@@ -28,5 +30,7 @@ Goto /admin/dashboard/ to create and edit blogs.
 
 username: test@test.com
 password: test123
+
+
 
 
