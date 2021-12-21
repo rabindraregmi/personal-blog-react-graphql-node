@@ -23,7 +23,7 @@ const UserLandingPage = () => {
   ) : (
     <>
       <div className="row">
-        <div className="col-sm-7">
+        <div className="col-sm-7 col-12 col-md-7 col-lg-7">
           <div className="user-landing-page d-flex flex-column align-content-flex-end">
             <div className="pagination">
               <button
