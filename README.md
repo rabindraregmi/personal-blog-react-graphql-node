@@ -22,6 +22,11 @@ npm install
 npm run start
 
 ```
+https://rabindra-blog.herokuapp.com/
 
+Goto /admin/dashboard/ to create and edit blogs.
+
+username: test@test.com
+password: test123
 
 
