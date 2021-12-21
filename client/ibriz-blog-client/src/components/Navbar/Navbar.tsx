@@ -28,7 +28,11 @@ const Navbar = () => {
                     Switch to User View
                   </NavLink>
                 </li>
-                <li className="nav-item" onClick={() => handleLogout()}>
+                <li
+                  className="nav-item"
+                  onClick={() => handleLogout()}
+                  data-testid="nav-item-logout"
+                >
                   <span className="nav-link">Logout</span>
                 </li>
               </ul>

@@ -9,18 +9,16 @@ import NotFoundPage from "../screens/NotFoundPage/NotFoundPage";
 
 const AuthorizedRouting = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<UserDashboardHOC />} />
-        <Route path="/admin/*" element={<LoginPage />} />
+    <Routes>
+      <Route path="/*" element={<UserDashboardHOC />} />
+      <Route path="/admin/*" element={<LoginPage />} />
 
-        <Route
-          path="/admin/dashboard/*"
-          element={<PrivateRoute element={<AdminDashboardHOC />} />}
-        />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+      <Route
+        path="/admin/dashboard/*"
+        element={<PrivateRoute element={<AdminDashboardHOC />} />}
+      />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 };
 
